@@ -1,0 +1,16 @@
+<div ng-controller="HomeCtrl">
+    <md-tabs md-selected="selectedTabIndex" md-dynamic-height md-border-bottom>
+        <md-tab label="Input">
+            <md-content class="md-padding">
+                <h1 class="md-display-2">Input <span class="md-caption">Calculation</span></h1>
+                <div ng-jsoneditor ng-model="d.input" options="d.json_editor_options" style="width: 100%; height: 550px;"></div>
+            </md-content>
+        </md-tab>
+        <md-tab label="Output">
+            <md-content class="md-padding">
+                <h1 class="md-display-2">Output  <span class="md-caption">Calculation</span></h1>
+                <div ng-jsoneditor ng-model="d.input" options="d.json_editor_options" style="width: 100%; height: 550px;"></div>
+            </md-content>
+        </md-tab>
+    </md-tabs>
+</div>

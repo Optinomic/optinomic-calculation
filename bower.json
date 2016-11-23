@@ -1,0 +1,30 @@
+{
+  "name": "optinomic-calculation",
+  "version": "0.0.0",
+  "main": "index.html",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "app/vendor"
+  ],
+  "dependencies": {
+    "jquery": "~1.11.1",
+    "underscore": "~1.5",
+    "bootstrap": "~3.1",
+    "angular": "~1.3.3",
+    "angular-route": "~1.3.3",
+    "angular-animate": "~1.3.3",
+    "angular-resource": "~1.3.3",
+    "angular-cookies": "~1.3.3",
+    "angular-mocks": "~1.3.3",
+    "angular-ui-utils": "~0.1",
+    "angular-bootstrap": "~0.10",
+    "moment": "~2.5",
+    "angular-material": "^1.1.1",
+    "ng-jsoneditor": "angular-tools/ng-jsoneditor#^1.0.0"
+  },
+  "resolutions": {
+    "angular-animate": "^1.4.8",
+    "angular": ">= 1.0.2"
+  }
+}
