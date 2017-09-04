@@ -9,723 +9,1262 @@ angular.module('optinomicCalculation').factory('calculation', function() {
 
 
 
+
         var calc = {};
 
         // ------------------------------------------
         // H e l p e r   -   F U N C T I O N S
         // ------------------------------------------
 
-        calc.get_t_score = function(scale, score) {
-            // Variablen initialisieren
-            var t_score = 0;
+        // Runden
+        calc.roundToOne = function(num) {
+            return +(Math.round(num + "e+1") + "e-1");
+        }
 
-            if (scale !== 0) {
-                t_score = 40;
+        // CH Datumsformat
+        calc.formatDateCH = function(date_string) {
+            date_string = date_string || null
+            if (date_string !== null) {
 
-                if (scale === 1) {
-                    // Psychotizismus
-                    t_score = 44;
-                    if (score >= 1) {
-                        t_score = 54;
-                    }
-                    if (score >= 2) {
-                        t_score = 59;
-                    }
-                    if (score >= 3) {
-                        t_score = 63;
-                    }
-                    if (score >= 4) {
-                        t_score = 68;
-                    }
-                    if (score >= 5) {
-                        t_score = 71;
-                    }
-                    if (score >= 6) {
-                        t_score = 73;
-                    }
-                    if (score >= 7) {
-                        t_score = 76;
-                    }
-                    if (score >= 9) {
-                        t_score = 78;
-                    }
-                    if (score >= 10) {
-                        t_score = 80;
-                    }
-                }
-                if (scale === 2) {
-                    // Paranoides Denken
-                    t_score = 41;
-                    if (score >= 1) {
-                        t_score = 49;
-                    }
-                    if (score >= 2) {
-                        t_score = 54;
-                    }
-                    if (score >= 3) {
-                        t_score = 58;
-                    }
-                    if (score >= 4) {
-                        t_score = 61;
-                    }
-                    if (score >= 5) {
-                        t_score = 65;
-                    }
-                    if (score >= 6) {
-                        t_score = 68;
-                    }
-                    if (score >= 7) {
-                        t_score = 71;
-                    }
-                    if (score >= 8) {
-                        t_score = 74;
-                    }
-                    if (score >= 13) {
-                        t_score = 78;
-                    }
-                    if (score >= 14) {
-                        t_score = 80;
-                    }
-                }
-                if (scale === 3) {
-                    // Phobische Angst
-                    t_score = 45;
-                    if (score >= 1) {
-                        t_score = 55;
-                    }
-                    if (score >= 2) {
-                        t_score = 61;
-                    }
-                    if (score >= 3) {
-                        t_score = 65;
-                    }
-                    if (score >= 4) {
-                        t_score = 69;
-                    }
-                    if (score >= 5) {
-                        t_score = 74;
-                    }
-                    if (score >= 6) {
-                        t_score = 76;
-                    }
-                    if (score >= 7) {
-                        t_score = 78;
-                    }
-                    if (score >= 8) {
-                        t_score = 80;
-                    }
-                }
-                if (scale === 4) {
-                    // Aggressivität/ Feindseligkeit
-                    t_score = 38;
-                    if (score >= 1) {
-                        t_score = 48;
-                    }
-                    if (score >= 2) {
-                        t_score = 55;
-                    }
-                    if (score >= 3) {
-                        t_score = 59;
-                    }
-                    if (score >= 4) {
-                        t_score = 63;
-                    }
-                    if (score >= 5) {
-                        t_score = 66;
-                    }
-                    if (score >= 6) {
-                        t_score = 69;
-                    }
-                    if (score >= 7) {
-                        t_score = 71;
-                    }
-                    if (score >= 8) {
-                        t_score = 72;
-                    }
-                    if (score >= 9) {
-                        t_score = 75;
-                    }
-                    if (score >= 10) {
-                        t_score = 78;
-                    }
-                    if (score >= 11) {
-                        t_score = 80;
-                    }
-                }
-                if (scale === 5) {
-                    // Ängstlichkeit
-                    t_score = 38;
-                    if (score >= 1) {
-                        t_score = 48;
-                    }
-                    if (score >= 2) {
-                        t_score = 52;
-                    }
-                    if (score >= 3) {
-                        t_score = 57;
-                    }
-                    if (score >= 4) {
-                        t_score = 60;
-                    }
-                    if (score >= 5) {
-                        t_score = 63;
-                    }
-                    if (score >= 6) {
-                        t_score = 66;
-                    }
-                    if (score >= 7) {
-                        t_score = 70;
-                    }
-                    if (score >= 8) {
-                        t_score = 73;
-                    }
-                    if (score >= 9) {
-                        t_score = 76;
-                    }
-                    if (score >= 10) {
-                        t_score = 78;
-                    }
-                    if (score >= 16) {
-                        t_score = 80;
-                    }
-                }
-                if (scale === 6) {
-                    // Depressivität
-                    t_score = 41;
-                    if (score >= 1) {
-                        t_score = 50;
-                    }
-                    if (score >= 2) {
-                        t_score = 55;
-                    }
-                    if (score >= 3) {
-                        t_score = 58;
-                    }
-                    if (score >= 4) {
-                        t_score = 61;
-                    }
-                    if (score >= 5) {
-                        t_score = 64;
-                    }
-                    if (score >= 6) {
-                        t_score = 67;
-                    }
-                    if (score >= 7) {
-                        t_score = 69;
-                    }
-                    if (score >= 8) {
-                        t_score = 71;
-                    }
-                    if (score >= 9) {
-                        t_score = 72;
-                    }
-                    if (score >= 10) {
-                        t_score = 74;
-                    }
-                    if (score >= 11) {
-                        t_score = 75;
-                    }
-                    if (score >= 13) {
-                        t_score = 76;
-                    }
-                    if (score >= 15) {
-                        t_score = 78;
-                    }
-                    if (score >= 16) {
-                        t_score = 80;
-                    }
-                }
-                if (scale === 7) {
-                    // Unsicherheit im Sozialkontakt
-                    t_score = 40;
-                    if (score >= 1) {
-                        t_score = 48;
-                    }
-                    if (score >= 2) {
-                        t_score = 54;
-                    }
-                    if (score >= 3) {
-                        t_score = 58;
-                    }
-                    if (score >= 4) {
-                        t_score = 63;
-                    }
-                    if (score >= 5) {
-                        t_score = 66;
-                    }
-                    if (score >= 6) {
-                        t_score = 69;
-                    }
-                    if (score >= 7) {
-                        t_score = 72;
-                    }
-                    if (score >= 8) {
-                        t_score = 75;
-                    }
-                    if (score >= 9) {
-                        t_score = 77;
-                    }
-                    if (score >= 10) {
-                        t_score = 80;
-                    }
-                }
-                if (scale === 8) {
-                    // Zwanghaftigkeit
-                    t_score = 35;
-                    if (score >= 1) {
-                        t_score = 43;
-                    }
-                    if (score >= 2) {
-                        t_score = 48;
-                    }
-                    if (score >= 3) {
-                        t_score = 51;
-                    }
-                    if (score >= 4) {
-                        t_score = 55;
-                    }
-                    if (score >= 5) {
-                        t_score = 58;
-                    }
-                    if (score >= 6) {
-                        t_score = 62;
-                    }
-                    if (score >= 7) {
-                        t_score = 64;
-                    }
-                    if (score >= 8) {
-                        t_score = 66;
-                    }
-                    if (score >= 9) {
-                        t_score = 68;
-                    }
-                    if (score >= 10) {
-                        t_score = 69;
-                    }
-                    if (score >= 11) {
-                        t_score = 72;
-                    }
-                    if (score >= 12) {
-                        t_score = 74;
-                    }
-                    if (score >= 14) {
-                        t_score = 75;
-                    }
-                    if (score >= 15) {
-                        t_score = 78;
-                    }
-                    if (score >= 16) {
-                        t_score = 80;
-                    }
-                }
-                if (scale === 9) {
-                    // Somatisierung
-                    t_score = 40;
+                // 1952-11-19T00:00:00.000000000000Z
+                var year = parseInt(date_string.substring(0, 4));
+                var month = parseInt(date_string.substring(5, 7));
+                var day = parseInt(date_string.substring(8, 10));
+                var date_string_return = day + "." + month + "." + year
 
-                    if (score >= 1) {
-                        t_score = 49;
-                    }
-
-                    if (score >= 2) {
-                        t_score = 54;
-                    }
-
-                    if (score >= 3) {
-                        t_score = 57;
-                    }
-
-                    if (score >= 4) {
-                        t_score = 61;
-                    }
-
-                    if (score >= 5) {
-                        t_score = 63;
-                    }
-
-                    if (score >= 6) {
-                        t_score = 65;
-                    }
-
-                    if (score >= 7) {
-                        t_score = 66;
-                    }
-
-                    if (score >= 8) {
-                        t_score = 69;
-                    }
-
-                    if (score >= 9) {
-                        t_score = 72;
-                    }
-
-                    if (score >= 10) {
-                        t_score = 74;
-                    }
-
-                    if (score >= 11) {
-                        t_score = 75;
-                    }
-
-                    if (score >= 12) {
-                        t_score = 75;
-                    }
-
-                    if (score >= 13) {
-                        t_score = 77;
-                    }
-
-                    if (score >= 14) {
-                        t_score = 80;
-                    }
-                }
-
-
-
+                return date_string_return;
             } else {
-
-                // GSI
-                t_score = 24;
-
-                if (score >= 1) {
-                    t_score = 30;
-                }
-
-                if (score >= 2) {
-                    t_score = 34;
-                }
-
-                if (score >= 3) {
-                    t_score = 36;
-                }
-
-                if (score >= 4) {
-                    t_score = 38;
-                }
-
-                if (score >= 5) {
-                    t_score = 40;
-                }
-
-                if (score >= 6) {
-                    t_score = 41;
-                }
-
-                if (score >= 7) {
-                    t_score = 43;
-                }
-
-                if (score >= 8) {
-                    t_score = 44;
-                }
-
-                if (score >= 9) {
-                    t_score = 45;
-                }
-
-                if (score >= 10) {
-                    t_score = 46;
-                }
-
-                if (score >= 11) {
-                    t_score = 48;
-                }
-
-                if (score >= 13) {
-                    t_score = 49;
-                }
-
-                if (score >= 14) {
-                    t_score = 50;
-                }
-
-                if (score >= 15) {
-                    t_score = 51;
-                }
-
-                if (score >= 16) {
-                    t_score = 52;
-                }
-
-                if (score >= 17) {
-                    t_score = 53;
-                }
-
-                if (score >= 19) {
-                    t_score = 54;
-                }
-
-                if (score >= 20) {
-                    t_score = 55;
-                }
-
-                if (score >= 22) {
-                    t_score = 56;
-                }
-
-                if (score >= 23) {
-                    t_score = 57;
-                }
-
-                if (score >= 25) {
-                    t_score = 58;
-                }
-
-                if (score >= 27) {
-                    t_score = 59;
-                }
-
-                if (score >= 29) {
-                    t_score = 60;
-                }
-
-                if (score >= 31) {
-                    t_score = 61;
-                }
-
-                if (score >= 32) {
-                    t_score = 62;
-                }
-
-                if (score >= 33) {
-                    t_score = 63;
-                }
-
-                if (score >= 34) {
-                    t_score = 64;
-                }
-
-                if (score >= 35) {
-                    t_score = 65;
-                }
-
-                if (score >= 37) {
-                    t_score = 66;
-                }
-
-                if (score >= 40) {
-                    t_score = 67;
-                }
-
-                if (score >= 41) {
-                    t_score = 68;
-                }
-
-                if (score >= 42) {
-                    t_score = 69;
-                }
-
-                if (score >= 47) {
-                    t_score = 70;
-                }
-
-                if (score >= 48) {
-                    t_score = 71;
-                }
-
-                if (score >= 51) {
-                    t_score = 72;
-                }
-
-                if (score >= 60) {
-                    t_score = 73;
-                }
-
-                if (score >= 61) {
-                    t_score = 74;
-                }
-
-                if (score >= 65) {
-                    t_score = 75;
-                }
-
-                if (score >= 70) {
-                    t_score = 77;
-                }
-
-                if (score >= 75) {
-                    t_score = 80;
-                }
-
+                return null;
             }
-
-            return t_score;
         };
 
-        calc.get_stanine = function(scale, score, gender, eintrittsort) {
-            // Variablen initialisieren
+        // Calculate AUDIT-Score 
+        calc.AUDIT_Score = function(d, gender) {
 
-            // Falls gender nicht gesetzt ist = Mann
-            if ((gender === '') || (gender === null) || (gender === undefined)) {
-                gender = 'male';
+            var score = 0;
+            var count_valid_scores = 0;
+
+            if (d.VZEA010 !== '999') {
+                score = score + parseInt(d.VZEA010);
+                count_valid_scores = count_valid_scores + 1;
+            };
+
+            if (d.VZEA020 !== '999') {
+                score = score + parseInt(d.VZEA020);
+                count_valid_scores = count_valid_scores + 1;
+            };
+
+            if (d.VZEA030 !== '999') {
+                score = score + parseInt(d.VZEA030);
+                count_valid_scores = count_valid_scores + 1;
+            };
+
+            if (d.VZEA040 !== '999') {
+                score = score + parseInt(d.VZEA040);
+                count_valid_scores = count_valid_scores + 1;
+            };
+
+            if (d.VZEA050 !== '999') {
+                score = score + parseInt(d.VZEA050);
+                count_valid_scores = count_valid_scores + 1;
+            };
+
+            if (d.VZEA060 !== '999') {
+                score = score + parseInt(d.VZEA060);
+                count_valid_scores = count_valid_scores + 1;
             }
 
-            // Falls eintrittsort nicht gesetzt ist = Entwöhnung
-            if ((eintrittsort === '') || (eintrittsort === null) || (eintrittsort === undefined)) {
-                // 1 = Entzug
-                // 2 = Entwöhnung
-                eintrittsort = '2';
-            }
+            if (d.VZEA070 !== '999') {
+                score = score + parseInt(d.VZEA070);
+                count_valid_scores = count_valid_scores + 1;
+            };
 
-            var stanine = 0;
+            if (d.VZEA080 !== '999') {
+                score = score + parseInt(d.VZEA080);
+                count_valid_scores = count_valid_scores + 1;
+            };
+
+            if (d.VZEA090 !== '999') {
+                score = score + parseInt(d.VZEA090);
+                count_valid_scores = count_valid_scores + 1;
+            };
+
+            if (d.VZEA100 !== '999') {
+                score = score + parseInt(d.VZEA100);
+                count_valid_scores = count_valid_scores + 1;
+            };
 
 
-            if (scale === 0) {
-                if (gender === 'male') {
+            var anz_mw_to_add = 10 - count_valid_scores;
+            var AUDIT_Score_Mean = calc.roundToOne(score / count_valid_scores);
 
-                    if (eintrittsort === '1') {
+            score = score + (anz_mw_to_add * AUDIT_Score_Mean);
 
-                        stanine = 1;
 
-                        if (score >= 3) {
-                            stanine = 2;
-                        }
+            // Populations (Men / Woman)
 
-                        if (score >= 8) {
-                            stanine = 3;
-                        }
+            var scale_ranges_men = [{
+                "from": 0,
+                "to": 7,
+                "result": "Risikoarmer Alkoholkonsum",
+                "result_color": "#4CAF50"
+            }, {
+                "from": 8,
+                "to": 15,
+                "result": "Verdacht auf eine alkoholbezogene Störung",
+                "result_color": "#FF9800"
+            }, {
+                "from": 16,
+                "to": 40,
+                "result": "Hohe Wahrscheinlichkeit einer Alkoholabhängigkeit",
+                "result_color": "#F44336"
+            }];
 
-                        if (score >= 16) {
-                            stanine = 4;
-                        }
+            var scale_ranges_woman = [{
+                "from": 0,
+                "to": 4,
+                "result": "Risikoarmer Alkoholkonsum",
+                "result_color": "#4CAF50"
+            }, {
+                "from": 5,
+                "to": 14,
+                "result": "Verdacht auf eine alkoholbezogene Störung",
+                "result_color": "#FF9800"
+            }, {
+                "from": 15,
+                "to": 40,
+                "result": "Hohe Wahrscheinlichkeit einer Alkoholabhängigkeit",
+                "result_color": "#F44336"
+            }];
 
-                        if (score >= 28) {
-                            stanine = 5;
-                        }
 
-                        if (score >= 43) {
-                            stanine = 6;
-                        }
+            // Current Population festlegen
+            var current_population = {};
 
-                        if (score >= 62) {
-                            stanine = 7;
-                        }
+            if (gender === 'male') {
+                // Mann
+                current_population = scale_ranges_men;
+            } else {
+                // Frau
+                current_population = scale_ranges_woman;
+            };
 
-                        if (score >= 86) {
-                            stanine = 8;
-                        }
 
-                        if (score >= 110) {
-                            stanine = 9;
-                        }
-                    }
+            var selected_population = {};
+            selected_population = current_population[0];
 
-                    if (eintrittsort === '2') {
-                        stanine = 1;
+            if (score >= current_population[1].from) {
+                selected_population = current_population[1];
+            };
+            if (score >= current_population[2].from) {
+                selected_population = current_population[2];
+            };
 
-                        if (score >= 1) {
-                            stanine = 2;
-                        }
 
-                        if (score >= 2) {
-                            stanine = 2;
-                        }
+            var return_obj = {
+                "AUDIT_Score": score,
+                "AUDIT_Score_Mean": AUDIT_Score_Mean,
+                "valid_scores": count_valid_scores,
+                "gender": gender,
+                "interpretation": selected_population,
+                "ranges": { "ranges": current_population }
+            };
 
-                        if (score >= 6) {
-                            stanine = 3;
-                        }
 
-                        if (score >= 10) {
-                            stanine = 4;
-                        }
+            return return_obj;
+        };
 
-                        if (score >= 17) {
-                            stanine = 5;
-                        }
+        // Calculate FAGERSTOEM-Score
+        calc.FAGERSTROEM_Score = function(d, patient) {
 
-                        if (score >= 29) {
-                            stanine = 6;
-                        }
+            var patient_name = patient.last_name;
 
-                        if (score >= 46) {
-                            stanine = 7;
-                        }
+            if (patient.gender === 'male') {
+                patient_name = 'Herr ' + patient_name;
+                var nichtraucher = 'Nichtraucher';
+            } else {
+                patient_name = 'Frau ' + patient_name;
+                var nichtraucher = 'Nichtraucherin';
+            };
 
-                        if (score >= 69) {
-                            stanine = 8;
-                        }
-                        if (score >= 88) {
-                            stanine = 9;
-                        }
-                    }
 
-                } else {
+            var score = 0;
+            var count_valid_scores = 0;
+            var anwers = 0;
 
-                    if (eintrittsort === '1') {
-                        stanine = 1;
+            if ((d.VZET020 !== '999') && (d.VZET020 !== '')) {
+                score = score + parseInt(d.VZET020);
+                count_valid_scores = count_valid_scores + 3;
+                anwers = anwers + 1;
+            };
 
-                        if (score >= 5) {
-                            stanine = 2;
-                        }
+            if ((d.VZET030 !== '999') && (d.VZET030 !== '')) {
+                score = score + parseInt(d.VZET030);
+                count_valid_scores = count_valid_scores + 3;
+                anwers = anwers + 1;
+            };
 
-                        if (score >= 12) {
-                            stanine = 3;
-                        }
+            if ((d.VZET040 !== '999') && (d.VZET040 !== '')) {
+                score = score + parseInt(d.VZET040);
+                count_valid_scores = count_valid_scores + 1;
+                anwers = anwers + 1;
+            };
 
-                        if (score >= 20) {
-                            stanine = 4;
-                        }
+            if ((d.VZET050 !== '999') && (d.VZET050 !== '')) {
+                score = score + parseInt(d.VZET050);
+                count_valid_scores = count_valid_scores + 1;
+                anwers = anwers + 1;
+            };
 
-                        if (score >= 33) {
-                            stanine = 5;
-                        }
+            if ((d.VZET060 !== '999') && (d.VZET060 !== '')) {
+                score = score + parseInt(d.VZET060);
+                count_valid_scores = count_valid_scores + 1;
+                anwers = anwers + 1;
+            };
 
-                        if (score >= 51) {
-                            stanine = 6;
-                        }
+            if ((d.VZET070 !== '999') && (d.VZET070 !== '')) {
+                score = score + parseInt(d.VZET070);
+                count_valid_scores = count_valid_scores + 1;
+                anwers = anwers + 1;
+            };
 
-                        if (score >= 72) {
-                            stanine = 7;
-                        }
+            var anz_mw_to_add = 10 - count_valid_scores;
+            var Fagerstroem_Mean = calc.roundToOne(score / count_valid_scores);
 
-                        if (score >= 99) {
-                            stanine = 8;
-                        }
+            score = score + (anz_mw_to_add * Fagerstroem_Mean)
 
-                        if (score >= 127) {
-                            stanine = 9;
-                        }
-                    }
 
-                    if (eintrittsort === '2') {
-                        stanine = 1;
+            var scale_ranges_fagerstoem = [{
+                "from": 0,
+                "to": 2,
+                "result": "Gering ausgeprägte körperliche Nikotinabhängigkeit.",
+                "result_color": "#4CAF50",
+                "logo_speed": 10
+            }, {
+                "from": 3,
+                "to": 4,
+                "result": "Mittelstark ausgeprägte körperliche Nikotinabhängigkeit.",
+                "result_color": "#FF9800",
+                "logo_speed": 25
+            }, {
+                "from": 5,
+                "to": 6,
+                "result": "Stark ausgeprägte körperliche Nikotinabhängigkeit.",
+                "result_color": "#F44336",
+                "logo_speed": 50
+            }, {
+                "from": 7,
+                "to": 10,
+                "result": "Sehr stark ausgeprägte körperliche Nikotinabhängigkeit.",
+                "result_color": "#F44336",
+                "logo_speed": 55
+            }];
 
-                        if (score >= 2) {
-                            stanine = 2;
-                        }
 
-                        if (score >= 6) {
-                            stanine = 3;
-                        }
+            var selected_population = {};
 
-                        if (score >= 13) {
-                            stanine = 4;
-                        }
+            if (score !== null) {
 
-                        if (score >= 24) {
-                            stanine = 5;
-                        }
+                selected_population = scale_ranges_fagerstoem[0];
 
-                        if (score >= 33) {
-                            stanine = 6;
-                        }
-
-                        if (score >= 56) {
-                            stanine = 7;
-                        }
-
-                        if (score >= 76) {
-                            stanine = 8;
-                        }
-                        if (score >= 100) {
-                            stanine = 9;
-                        }
-                    }
-
+                if (score >= scale_ranges_fagerstoem[1].from) {
+                    selected_population = scale_ranges_fagerstoem[1];
+                };
+                if (score >= scale_ranges_fagerstoem[2].from) {
+                    selected_population = scale_ranges_fagerstoem[2];
+                };
+                if (score >= scale_ranges_fagerstoem[3].from) {
+                    selected_population = scale_ranges_fagerstoem[3];
+                };
+            } else {
+                selected_population = {
+                    "from": 999,
+                    "to": 999,
+                    "result": "Keine Interpretation möglich.",
+                    "result_color": "#F44336",
+                    "logo_speed": 55
                 }
+            };
 
-            }
 
-            return stanine;
+
+            var nikotin_konsum = parseInt(d.VZET010);
+            var smoker = null;
+
+            if ('VMEB001' in d) {
+                var mz_date = d.VMEB001;
+            } else {
+                var mz_date = d.datestamp
+            };
+
+            var mz_datum = calc.formatDateCH(mz_date);
+
+
+
+            switch (nikotin_konsum) {
+                case 999:
+                    var fagerstroem_text = "Das Rauchverhalten ist bei Eintritt nicht bekannt.";
+                    break;
+                case 1:
+                    smoker = false;
+                    var nichtraucher = "Nichtraucherin";
+                    if (patient.gender === "male") {
+                        nichtraucher = "Nichtraucher";
+                    };
+
+                    var fagerstroem_text = "Am " + mz_datum + " gab " + patient_name + " gab an, «" + nichtraucher + "» zu sein.";
+
+
+                    break;
+                default:
+
+                    var fagerstroem_text = selected_population.result;
+                    var fagerstroem_score = score;
+                    smoker = true;
+
+                    fagerstroem_text = "Bei Eintritt bestand eine «" + fagerstroem_text + "» (∑=" + fagerstroem_score + ")."
+
+                    if (score === 999) {
+                        fagerstroem_text = "Das Rauchverhalten ist bei Eintritt nicht bekannt.";
+                    };
+
+            };
+
+            var smoker_obj = {
+                "summyary": fagerstroem_text,
+                "smoker": smoker,
+                "date": mz_date,
+                "datum": mz_datum
+            };
+
+            var return_obj = {
+                "FAGERSTROEM_Score": score,
+                "Fagerstroem_Mean": Fagerstroem_Mean,
+                "valid_scores": count_valid_scores,
+                "answers": anwers,
+                "interpretation": selected_population,
+                "ranges": { "ranges": scale_ranges_fagerstoem },
+                "smoker": smoker_obj
+            };
+
+
+            return return_obj;
+        };
+
+        // Drinks / Gramm Alkohol berechnen
+        calc.get_anz_g_alc = function(d) {
+
+            var return_obj = {
+                "gramm_total": 0,
+                "drinks": [],
+                "drinks_summary": ""
+            };
+
+
+            if (d['QZEA120[VZEA120a]'] !== "") {
+                var gramm = parseInt(d['QZEA120[VZEA120a]']) * 0.4;
+                var drink_obj = {
+                    "drink": "Bier",
+                    "gramm": calc.roundToOne(gramm),
+                    "volumenprozent ": 5,
+                };
+                if (gramm > 0) {
+                    return_obj.gramm_total = calc.roundToOne(return_obj.gramm_total + gramm);
+                    return_obj.drinks.push(drink_obj);
+                };
+            };
+
+            if (d['QZEA120[VZEA120b]'] !== "") {
+                var gramm = parseInt(d['QZEA120[VZEA120b]']) * 0.4;
+                var drink_obj = {
+                    "drink": "Suure Most",
+                    "gramm": calc.roundToOne(gramm),
+                    "volumenprozent": 5,
+                };
+                if (gramm > 0) {
+                    return_obj.gramm_total = calc.roundToOne(return_obj.gramm_total + gramm);
+                    return_obj.drinks.push(drink_obj);
+                };
+            };
+
+            if (d['QZEA120[VZEA120c]'] !== "") {
+                var gramm = parseInt(d['QZEA120[VZEA120c]']) * 0.4;
+                var drink_obj = {
+                    "drink": "Alcopop",
+                    "gramm": calc.roundToOne(gramm),
+                    "volumenprozent": 5,
+                };
+                if (gramm > 0) {
+                    return_obj.gramm_total = calc.roundToOne(return_obj.gramm_total + gramm);
+                    return_obj.drinks.push(drink_obj);
+                };
+            };
+
+            if (d['QZEA120[VZEA120d]'] !== "") {
+                var gramm = parseInt(d['QZEA120[VZEA120d]']) * 0.4;
+                var drink_obj = {
+                    "drink": "Andere 5%",
+                    "gramm": calc.roundToOne(gramm),
+                    "volumenprozent": 5,
+                };
+                if (gramm > 0) {
+                    return_obj.gramm_total = calc.roundToOne(return_obj.gramm_total + gramm);
+                    return_obj.drinks.push(drink_obj);
+                };
+            };
+
+            if (d['QZEA120[VZEA120e]'] !== "") {
+                var gramm = parseInt(d['QZEA120[VZEA120e]']) * 0.96;
+                var drink_obj = {
+                    "drink": "Wein/Champagner/Sekt",
+                    "gramm": calc.roundToOne(gramm),
+                    "volumenprozent": 12,
+                };
+                if (gramm > 0) {
+                    return_obj.gramm_total = calc.roundToOne(return_obj.gramm_total + gramm);
+                    return_obj.drinks.push(drink_obj);
+                };
+            };
+
+            if (d['QZEA120[VZEA120f]'] !== "") {
+                var gramm = parseInt(d['QZEA120[VZEA120f]']) * 0.96;
+                var drink_obj = {
+                    "drink": "Andere 12%",
+                    "gramm": calc.roundToOne(gramm),
+                    "volumenprozent": 12,
+                };
+                if (gramm > 0) {
+                    return_obj.gramm_total = calc.roundToOne(return_obj.gramm_total + gramm);
+                    return_obj.drinks.push(drink_obj);
+                };
+            };
+
+            if (d['QZEA120[VZEA120g]'] !== "") {
+                var gramm = parseInt(d['QZEA120[VZEA120g]']) * 1.6;
+                var drink_obj = {
+                    "drink": "Wermut/Portwein",
+                    "gramm": calc.roundToOne(gramm),
+                    "volumenprozent": 20,
+                };
+                if (gramm > 0) {
+                    return_obj.gramm_total = calc.roundToOne(return_obj.gramm_total + gramm);
+                    return_obj.drinks.push(drink_obj);
+                };
+            };
+
+            if (d['QZEA120[VZEA120h]'] !== "") {
+                var gramm = parseInt(d['QZEA120[VZEA120h]']) * 1.6;
+                var drink_obj = {
+                    "drink": "Andere 20%",
+                    "gramm": calc.roundToOne(gramm),
+                    "volumenprozent": 20,
+                };
+                if (gramm > 0) {
+                    return_obj.gramm_total = calc.roundToOne(return_obj.gramm_total + gramm);
+                    return_obj.drinks.push(drink_obj);
+                };
+            };
+
+            if (d['QZEA120[VZEA120i]'] !== "") {
+                var gramm = parseInt(d['QZEA120[VZEA120i]']) * 3.2;
+                var drink_obj = {
+                    "drink": "Schnäpse (ink. Café Schnaps)",
+                    "gramm": calc.roundToOne(gramm),
+                    "volumenprozent": 40,
+                };
+                if (gramm > 0) {
+                    return_obj.gramm_total = calc.roundToOne(return_obj.gramm_total + gramm);
+                    return_obj.drinks.push(drink_obj);
+                };
+            };
+
+            if (d['QZEA120[VZEA120j]'] !== "") {
+                var gramm = parseInt(d['QZEA120[VZEA120j]']) * 3.2;
+                var drink_obj = {
+                    "drink": "Andere 40%",
+                    "gramm": calc.roundToOne(gramm),
+                    "volumenprozent": 40,
+                };
+                if (gramm > 0) {
+                    return_obj.gramm_total = calc.roundToOne(return_obj.gramm_total + gramm);
+                    return_obj.drinks.push(drink_obj);
+                };
+            };
+
+
+            // Build Summary
+            var drink_text = '';
+            return_obj.drinks.forEach(function(drink, drinkID) {
+                if (drinkID > 0) {
+                    return_obj.drinks_summary = return_obj.drinks_summary + ', ';
+                };
+
+                if (return_obj.drinks.length > 1) {
+                    drink_text = drink.gramm + 'g ' + drink.drink;
+                } else {
+                    drink_text = drink.drink;
+                };
+                return_obj.drinks_summary = return_obj.drinks_summary + drink_text;
+            });
+
+            if (return_obj.drinks.length > 1) {
+                return_obj.drinks_summary = 'Bestehend aus ' + return_obj.drinks_summary;
+            } else {
+                return_obj.drinks_summary = 'Ausschliesslich ' + return_obj.drinks_summary;
+            };
+
+            return return_obj;
+        };
+
+        // Problemsubstanzen aufzählen
+        calc.Problem_Substanzen = function(response, patient) {
+
+            var substanz = '';
+            var answer_option = 0;
+            var answer = 0;
+            var my_result = {};
+            var text = '';
+            var obj_to_push = {};
+            var problemsubstanzen = [];
+            var patient_name = patient.last_name;
+
+            if (patient.gender === 'male') {
+                patient_name = 'Herr ' + patient_name;
+                var nichtraucher = 'Nichtraucher';
+            } else {
+                patient_name = 'Frau ' + patient_name;
+                var nichtraucher = 'Nichtraucherin';
+            };
+
+            var problemsubstanzen_label = {
+                "answer_options": [{
+                    "1": "Täglich",
+                    "2": "4-6 Tage pro Woche",
+                    "3": "2-3 Tage pro Woche",
+                    "4": "1 Tag pro Woche oder weniger",
+                    "5": "Kein Konsum",
+                    "999": "Nicht bekannt"
+                }, {
+                    "0": "0 bis 10 Zigaretten pro Tag",
+                    "1": "11-20 Zigaretten pro Tag",
+                    "2": "21-30 Zigaretten pro Tag",
+                    "3": "31 und mehr Zigaretten pro Tag",
+                    "999": "Nicht bekannt"
+                }, {
+                    "1": "Nie",
+                    "2": "1 Tag pro Woche oder weniger",
+                    "3": "2-3 Tage pro Woche",
+                    "4": "4-6 Tage pro Woche",
+                    "5": "Einmal täglich",
+                    "6": "Mehrmals täglich",
+                    "999": "Nicht bekannt"
+                }]
+            };
+
+
+            // Alkohol
+            if (response['QNED0701[VNED070a]'] === 'Y') {
+                substanz = 'Alkohol'
+                answer_option = 0;
+                answer = parseInt(response.VNED073a);
+
+                my_result = problemsubstanzen_label.answer_options[answer_option];
+                text = substanz + ': ' + my_result[answer];
+                var g_alc = calc.get_anz_g_alc(response);
+                var audit = calc.AUDIT_Score(response, patient.gender);
+                var audit_text = audit.interpretation.result;
+                var audit_score = audit.AUDIT_Score;
+                audit_text = "Bei Eintritt bestand eine «" + audit_text + "» (∑=" + audit_score + ")."
+
+                obj_to_push = {
+                    "audit": audit_text,
+                    "substanz": substanz,
+                    "label": my_result[answer] + ', jeweils ' + g_alc.gramm_total + 'g (' + g_alc.drinks_summary + ').',
+                    "drinks": g_alc
+                };
+
+                problemsubstanzen.push(obj_to_push);
+            };
+
+            // Nikotin
+            var nikotin_konsum = parseInt(response.VZET010);
+
+            if ((nikotin_konsum !== 1) && (nikotin_konsum !== 999)) {
+                substanz = 'Tabak (Nikotin)'
+
+                var menge = parseInt(response.VZET020);
+                var FAGERSTROEM = calc.FAGERSTROEM_Score(response, patient);
+                var fagerstroem_text = FAGERSTROEM.interpretation.result;
+                var fagerstroem_score = FAGERSTROEM.FAGERSTROEM_Score;
+                fagerstroem_text = "Bei Eintritt bestand eine «" + fagerstroem_text + "» (∑=" + fagerstroem_score + ")."
+
+                answer_option = 2;
+                my_result = problemsubstanzen_label.answer_options[answer_option];
+
+                answer_option = 1;
+                my_result_menge = problemsubstanzen_label.answer_options[answer_option];
+
+                obj_to_push = {
+                    "substanz": substanz,
+                    "label": my_result[nikotin_konsum] + ' (' + my_result_menge[menge] + ').',
+                    "fagerstroem": fagerstroem_text
+                };
+
+                problemsubstanzen.push(obj_to_push);
+            };
+
+            //  if (response['QNED0707[VNED070i]'] === 'Y') {
+            //      substanz = 'Nikotin / Tabak'
+            //      answer_option = 1;
+            //      answer = parseInt(response.VNED073i);
+            //      var answer_tabak = parseInt(response.VZET020);
+            //  
+            //      my_result = problemsubstanzen_label.answer_options[answer_option];
+            //      var my_tabak_result = problemsubstanzen_label.answer_options[1];
+            //      text = substanz + ': ' + my_result[answer] + ' (' + my_tabak_result[answer_tabak] + ')';
+            //  
+            //      obj_to_push = {
+            //          "substanz": substanz,
+            //          "label": my_result[answer] + ' (' + my_tabak_result[answer_tabak] + ')'
+            //      };
+            //  
+            //      problemsubstanzen.push(obj_to_push);
+            //  };
+
+            // Optiate
+            if (response['QNED0702[VNED070ba]'] === 'Y') {
+                substanz = 'Heroin (Opiat)'
+                answer_option = 0;
+                answer = parseInt(response.VNED073ba);
+
+                my_result = problemsubstanzen_label.answer_options[answer_option];
+                text = substanz + ': ' + my_result[answer];
+
+                obj_to_push = {
+                    "substanz": substanz,
+                    "label": my_result[answer]
+                };
+
+                problemsubstanzen.push(obj_to_push);
+            };
+
+            if (response['QNED0702[VNED070bb]'] === 'Y') {
+                substanz = 'Methadon (Opiat)'
+                answer_option = 0;
+                answer = parseInt(response.VNED073bb);
+
+                my_result = problemsubstanzen_label.answer_options[answer_option];
+                text = substanz + ': ' + my_result[answer];
+
+                obj_to_push = {
+                    "substanz": substanz,
+                    "label": my_result[answer]
+                };
+
+                problemsubstanzen.push(obj_to_push);
+            };
+
+            if (response['QNED0702[VNED070bc]'] === 'Y') {
+                substanz = 'Buprenorphin (Opiat)'
+                answer_option = 0;
+                answer = parseInt(response.VNED073bc);
+
+                my_result = problemsubstanzen_label.answer_options[answer_option];
+                text = substanz + ': ' + my_result[answer];
+
+                obj_to_push = {
+                    "substanz": substanz,
+                    "label": my_result[answer]
+                };
+
+                problemsubstanzen.push(obj_to_push);
+            };
+
+            if (response['QNED0702[VNED070bd]'] === 'Y') {
+                substanz = 'Fentanyl (Opiat)'
+                answer_option = 0;
+                answer = parseInt(response.VNED073bc);
+
+                my_result = problemsubstanzen_label.answer_options[answer_option];
+                text = substanz + ': ' + my_result[answer];
+
+                obj_to_push = {
+                    "substanz": substanz,
+                    "label": my_result[answer]
+                };
+
+                problemsubstanzen.push(obj_to_push);
+            };
+
+            if (response['QNED0702[VNED070be]'] === 'Y') {
+                substanz = 'Andere Opioide' + response.VNED071be
+                answer_option = 0;
+                answer = parseInt(response.VNED073bd);
+
+                my_result = problemsubstanzen_label.answer_options[answer_option];
+                text = substanz + ': ' + my_result[answer];
+
+                obj_to_push = {
+                    "substanz": substanz,
+                    "label": my_result[answer]
+                };
+
+                problemsubstanzen.push(obj_to_push);
+            };
+
+            // Kokain
+            if (response['QNED0703[VNED070ca]'] === 'Y') {
+                substanz = 'Kokain-Pulver'
+                answer_option = 0;
+                answer = parseInt(response.VNED073ca);
+
+                my_result = problemsubstanzen_label.answer_options[answer_option];
+                text = substanz + ': ' + my_result[answer];
+
+                obj_to_push = {
+                    "substanz": substanz,
+                    "label": my_result[answer]
+                };
+
+                problemsubstanzen.push(obj_to_push);
+            };
+
+            if (response['QNED0703[VNED070cb]'] === 'Y') {
+                substanz = 'Crack-Kokain'
+                answer_option = 0;
+                answer = parseInt(response.VNED073cb);
+
+                my_result = problemsubstanzen_label.answer_options[answer_option];
+                text = substanz + ': ' + my_result[answer];
+
+                obj_to_push = {
+                    "substanz": substanz,
+                    "label": my_result[answer]
+                };
+
+                problemsubstanzen.push(obj_to_push);
+            };
+
+            if (response['QNED0703[VNED070cc]'] === 'Y') {
+                substanz = 'Anderer Kokain-Typ ' + response.VNED071cc
+                answer_option = 0;
+                answer = parseInt(response.VNED073cc);
+
+                my_result = problemsubstanzen_label.answer_options[answer_option];
+                text = substanz + ': ' + my_result[answer];
+
+                obj_to_push = {
+                    "substanz": substanz,
+                    "label": my_result[answer]
+                };
+
+                problemsubstanzen.push(obj_to_push);
+            };
+
+            // Andere Stimulanzien
+            if (response['QNED0704[VNED070da]'] === 'Y') {
+                substanz = 'Amphetamine'
+                answer_option = 0;
+                answer = parseInt(response.VNED073da);
+
+                my_result = problemsubstanzen_label.answer_options[answer_option];
+                text = substanz + ': ' + my_result[answer];
+
+                obj_to_push = {
+                    "substanz": substanz,
+                    "label": my_result[answer]
+                };
+
+                problemsubstanzen.push(obj_to_push);
+            };
+
+            if (response['QNED0704[VNED070db]'] === 'Y') {
+                substanz = 'Methamphetamine (Crystal Meth, Ice, Thai-Pillen)'
+                answer_option = 0;
+                answer = parseInt(response.VNED073db);
+
+                my_result = problemsubstanzen_label.answer_options[answer_option];
+                text = substanz + ': ' + my_result[answer];
+
+                obj_to_push = {
+                    "substanz": substanz,
+                    "label": my_result[answer]
+                };
+
+                problemsubstanzen.push(obj_to_push);
+            };
+
+            if (response['QNED0704[VNED070dc]'] === 'Y') {
+                substanz = 'MDMA und verwandte Stoffe (Ecstasy)'
+                answer_option = 0;
+                answer = parseInt(response.VNED073dc);
+
+                my_result = problemsubstanzen_label.answer_options[answer_option];
+                text = substanz + ': ' + my_result[answer];
+
+                obj_to_push = {
+                    "substanz": substanz,
+                    "label": my_result[answer]
+                };
+
+                problemsubstanzen.push(obj_to_push);
+            };
+
+            if (response['QNED0704[VNED070dd]'] === 'Y') {
+                substanz = 'Synthetische Cathinone (Mephedron, Methylon, Methcathinon/Ephedron, MDPV, Methedron)'
+                answer_option = 0;
+                answer = parseInt(response.VNED073dd);
+
+                my_result = problemsubstanzen_label.answer_options[answer_option];
+                text = substanz + ': ' + my_result[answer];
+
+                obj_to_push = {
+                    "substanz": substanz,
+                    "label": my_result[answer]
+                };
+
+                problemsubstanzen.push(obj_to_push);
+            };
+
+            if (response['QNED0704[VNED070de]'] === 'Y') {
+                substanz = 'Andere Stimulanzien ' + response.VNED071de
+                answer_option = 0;
+                answer = parseInt(response.VNED073de);
+
+                my_result = problemsubstanzen_label.answer_options[answer_option];
+                text = substanz + ': ' + my_result[answer];
+
+                obj_to_push = {
+                    "substanz": substanz,
+                    "label": my_result[answer]
+                };
+
+                problemsubstanzen.push(obj_to_push);
+            };
+
+            // Hypnotika/Sedativa
+
+            if (response['QNED0705[VNED070ea]'] === 'Y') {
+                substanz = 'Barbiturate (missbräuchlich)'
+                answer_option = 0;
+                answer = parseInt(response.VNED073ea);
+
+                my_result = problemsubstanzen_label.answer_options[answer_option];
+                text = substanz + ': ' + my_result[answer];
+
+                obj_to_push = {
+                    "substanz": substanz,
+                    "label": my_result[answer]
+                };
+
+                problemsubstanzen.push(obj_to_push);
+            };
+
+            if (response['QNED0705[VNED070eb]'] === 'Y') {
+                substanz = 'Benzodiazepine (missbräuchlich)'
+                answer_option = 0;
+                answer = parseInt(response.VNED073eb);
+
+                my_result = problemsubstanzen_label.answer_options[answer_option];
+                text = substanz + ': ' + my_result[answer];
+
+                obj_to_push = {
+                    "substanz": substanz,
+                    "label": my_result[answer]
+                };
+
+                problemsubstanzen.push(obj_to_push);
+            };
+
+            if (response['QNED0705[VNED070ec]'] === 'Y') {
+                substanz = 'GHB/GBL (K.O.-Tropfen)'
+                answer_option = 0;
+                answer = parseInt(response.VNED073ec);
+
+                my_result = problemsubstanzen_label.answer_options[answer_option];
+                text = substanz + ': ' + my_result[answer];
+
+                obj_to_push = {
+                    "substanz": substanz,
+                    "label": my_result[answer]
+                };
+
+                problemsubstanzen.push(obj_to_push);
+            };
+
+            if (response['QNED0705[VNED070ed]'] === 'Y') {
+                substanz = 'Andere Schlaf-/Beruhigungsmittel ' + response.VNED071ed
+                answer_option = 0;
+                answer = parseInt(response.VNED073ed);
+
+                my_result = problemsubstanzen_label.answer_options[answer_option];
+                text = substanz + ': ' + my_result[answer];
+
+                obj_to_push = {
+                    "substanz": substanz,
+                    "label": my_result[answer]
+                };
+
+                problemsubstanzen.push(obj_to_push);
+            };
+
+            // Halluzinogene
+
+            if (response['QNED0706[VNED070fa]'] === 'Y') {
+                substanz = 'LSD'
+                answer_option = 0;
+                answer = parseInt(response.VNED073fa);
+
+                my_result = problemsubstanzen_label.answer_options[answer_option];
+                text = substanz + ': ' + my_result[answer];
+
+                obj_to_push = {
+                    "substanz": substanz,
+                    "label": my_result[answer]
+                };
+
+                problemsubstanzen.push(obj_to_push);
+            };
+
+            if (response['QNED0706[VNED070fb]'] === 'Y') {
+                substanz = 'Ketamin'
+                answer_option = 0;
+                answer = parseInt(response.VNED073fb);
+
+                my_result = problemsubstanzen_label.answer_options[answer_option];
+                text = substanz + ': ' + my_result[answer];
+
+                obj_to_push = {
+                    "substanz": substanz,
+                    "label": my_result[answer]
+                };
+
+                problemsubstanzen.push(obj_to_push);
+            };
+
+            if (response['QNED0706[VNED070fc]'] === 'Y') {
+                substanz = 'Andere Halluzinogene ' + response.VNED071fc
+                answer_option = 0;
+                answer = parseInt(response.VNED073fc);
+
+                my_result = problemsubstanzen_label.answer_options[answer_option];
+                text = substanz + ': ' + my_result[answer];
+
+                obj_to_push = {
+                    "substanz": substanz,
+                    "label": my_result[answer]
+                };
+
+                problemsubstanzen.push(obj_to_push);
+            };
+
+            // Weitere Substanzen
+            if (response['QNED0707[VNED070g]'] === 'Y') {
+                substanz = 'Flüchtige Stoffe'
+                answer_option = 0;
+                answer = parseInt(response.VNED073g);
+
+                my_result = problemsubstanzen_label.answer_options[answer_option];
+                text = substanz + ': ' + my_result[answer];
+
+                obj_to_push = {
+                    "substanz": substanz,
+                    "label": my_result[answer]
+                };
+
+                problemsubstanzen.push(obj_to_push);
+            };
+
+            if (response['QNED0707[VNED070h]'] === 'Y') {
+                substanz = 'Cannabis'
+                answer_option = 0;
+                answer = parseInt(response.VNED073h);
+
+                my_result = problemsubstanzen_label.answer_options[answer_option];
+                text = substanz + ': ' + my_result[answer];
+
+                obj_to_push = {
+                    "substanz": substanz,
+                    "label": my_result[answer]
+                };
+
+                problemsubstanzen.push(obj_to_push);
+            };
+
+
+
+            if (response['QNED0707[VNED070j]'] === 'Y') {
+                substanz = response.VNED071j
+                answer_option = 0;
+                answer = parseInt(response.VNED073j);
+
+                my_result = problemsubstanzen_label.answer_options[answer_option];
+                text = substanz + ': ' + my_result[answer];
+
+                obj_to_push = {
+                    "substanz": substanz,
+                    "label": my_result[answer]
+                };
+
+                problemsubstanzen.push(obj_to_push);
+            };
+
+
+            if (problemsubstanzen.length > 0) {
+                var summary_description = "Folgende Substanzen konsumierte " + patient_name + " vor dem aktuellen Entzug in der angegebenen Häufigkeit:"
+            } else {
+                var summary_description = "Keine Angaben zu Problemsubstanzen vorhanden."
+            };
+
+
+            // Anzahl Entzüge
+            var anz_entzuege = parseInt(response['VYEE010']);
+            var entzuege = {
+                "angabe": anz_entzuege,
+                "text": ""
+            };
+
+            if (anz_entzuege === 999) {
+                entzuege.text = "Die Anzahl der bisherigen Entzugsbehandlungen ist nicht bekannt."
+            };
+
+            if (anz_entzuege === 0) {
+                entzuege.text = "Es liegen keine professionell begleitete Entzugsbehandlungen vor."
+            };
+
+            if (anz_entzuege === 1) {
+                entzuege.text = "Es liegt eine professionell begleitete Entzugsbehandlung vor."
+            };
+
+            if ((anz_entzuege === 2) || (anz_entzuege === 3) || (anz_entzuege === 4) || (anz_entzuege === 5)) {
+                var count_text = "";
+                if (anz_entzuege === 2) {count_text = "zwei"};
+                if (anz_entzuege === 3) {count_text = "drei"};
+                if (anz_entzuege === 4) {count_text = "vier"};
+                if (anz_entzuege === 5) {count_text = "fünf"};
+                entzuege.text = "Es liegen " + " professionell begleitete Entzugsbehandlungen vor."
+            };
+
+            if (anz_entzuege === 6) {
+                entzuege.text = "Es liegen sechs oder mehr professionell begleitete Entzugsbehandlungen vor."
+            };
+
+
+            // Alter
+            var hauptproblemsubstanzen = [];
+            hauptproblemsubstanzen.push("Alkohol");
+            hauptproblemsubstanzen.push("Heroin");
+            hauptproblemsubstanzen.push("Methadon (missbräuchlich)");
+            hauptproblemsubstanzen.push("Buprenorphin (missbräuchlich)");
+            hauptproblemsubstanzen.push("Fentanyl (missbräuchlich)");
+            hauptproblemsubstanzen.push("Andere Opioide");
+            hauptproblemsubstanzen.push("Kokain-Pulver");
+            hauptproblemsubstanzen.push("Crack-Kokain");
+            hauptproblemsubstanzen.push("Anderer Kokain-Typ");
+            hauptproblemsubstanzen.push("Amphetamine");
+            hauptproblemsubstanzen.push("Methamphetamine (Crystal Meth, Ice, Thai-Pillen)");
+            hauptproblemsubstanzen.push("MDMA und verwandte Stoffe (Ecstasy)");
+            hauptproblemsubstanzen.push("Synthetische Cathinone (Mephedron, Methylon, Methcathinon/Ephedron, MDPV, Methedron)");
+            hauptproblemsubstanzen.push("Andere Stimulanzien");
+            hauptproblemsubstanzen.push("Barbiturate (missbräuchlich)");
+            hauptproblemsubstanzen.push("Benzodiazepine (missbräuchlich)");
+            hauptproblemsubstanzen.push("GHB/GBL");
+            hauptproblemsubstanzen.push("Andere Schlafmittel/Beruhigungsmittel");
+            hauptproblemsubstanzen.push("LSD");
+            hauptproblemsubstanzen.push("Ketamin");
+            hauptproblemsubstanzen.push("Andere Halluzinogene");
+            hauptproblemsubstanzen.push("Flüchtige Stoffe");
+            hauptproblemsubstanzen.push("Cannabis");
+            hauptproblemsubstanzen.push("Tabak");
+            hauptproblemsubstanzen.push("Andere Substanzen (alle Typen)");
+            hauptproblemsubstanzen.push("Glücksspielsucht");
+            hauptproblemsubstanzen.push("Computer- bzw. Internetsucht");
+            hauptproblemsubstanzen.push("Essstörungen");
+            hauptproblemsubstanzen.push("Andere suchtähnliche Verhaltensweisen (alle Typen)");
+
+            var hauptproblem_substanz = parseInt(response['VNED010']);
+            var konsumalter_regelmaessig = parseInt(response['VMED050']);
+            var konsumalter_problematisch = parseInt(response['VMED060']);
+            var konsumalter = {
+                "angabe_hauptproblem_substanz": hauptproblem_substanz,
+                "hauptproblem_substanz": hauptproblemsubstanzen[hauptproblem_substanz - 1],
+                "angabe_regelmaessig": konsumalter_regelmaessig,
+                "angabe_problematisch": konsumalter_problematisch,
+                "text_konsumalter": ""
+            };
+
+            if ((konsumalter_regelmaessig !== undefined) && (konsumalter_regelmaessig !== null)) {
+                if ((konsumalter_problematisch !== undefined) && (konsumalter_problematisch !== null)) {
+                    konsumalter.text_konsumalter = "Seit dem Alter von " + konsumalter.angabe_regelmaessig + " Jahren wurde die Hauptproblemsubstanz «" + konsumalter.hauptproblem_substanz + "» regelmässig konsumiert. ";
+                    konsumalter.text_konsumalter = konsumalter.text_konsumalter + "Ein problematischer Konsum besteht seit dem Alter von " + konsumalter.angabe_problematisch + " Jahren.";
+                };
+            };
+
+            var zusatz = konsumalter;
+            zusatz.angabe_entzuege = entzuege.angabe;
+            zusatz.text_entzuege = entzuege.text;
+
+            // Return
+            var return_obj = {
+                "zusatz": zusatz,
+                "substanzen": problemsubstanzen,
+                "description": summary_description
+            };
+
+
+            return return_obj;
+        };
+
+
+        // ------------------------------------------
+        // PDF
+        // ------------------------------------------
+
+
+        calc.pdfmake_problemsubstanzen = function(ps, list) {
+
+            // console.warn('START: pdfmake_problemsubstanzen', ps);
+
+            var d = {
+                "stack": [],
+            };
+
+            // Inhalt
+            var titel = {
+                "text": "Problemsubstanzen",
+                "style": "h2"
+            };
+            var einleitung = {
+                "text": ps.description + " ",
+                "style": "p"
+            };
+
+            var ps_list = {
+                "ol": []
+            };
+
+            var ps_text = {
+                "text": [],
+            };
+            ps_text.text.push(einleitung);
+
+
+            ps.substanzen.forEach(function(s, sID) {
+                var line = {
+                    "style": "p",
+                    "text": [
+                        { "text": s.substanz + ": ", "bold": true },
+                        { "text": s.label, "bold": false },
+                    ],
+                    "margin": [0, 6, 0, 0]
+                };
+
+                
+
+                var trenner = "";
+                if (sID !== 0) {
+                    trenner = "; ";
+                };
+                ps_text.text.push(trenner);
+                ps_text.text.push(line.text[0]);
+                ps_text.text.push(line.text[1]);
+
+                if ("audit" in s) {
+                    line.text.push({ "text": " " + s.audit, "bold": false });
+                    ps_text.text.push({ "text": " " + s.audit, "bold": false });
+                };
+                if ("fagerstroem" in s) {
+                    line.text.push({ "text": " " + s.fagerstroem, "bold": false });
+                    ps_text.text.push({ "text": " " + s.fagerstroem, "bold": false });
+                };
+                ps_list.ol.push(line);
+            });
+
+
+            // Abfüllen
+            d.stack.push(titel);
+
+            if (list === true) {
+                d.stack.push(einleitung);
+                d.stack.push(ps_list);
+            } else {
+                d.stack.push(ps_text);
+            };
+
+
+            // console.warn('pdfmake_problemsubstanzen', d);
+            console.log(JSON.stringify(d, null, 2));
+
+            return d;
+        };
+
+        calc.pdfmake_audit = function(audit) {
+
+            console.warn('START: pdfmake_audit', audit);
+
+            var d = {
+                "stack": [],
+            };
+
+
+            var actinfo_audit = {
+                "options": {
+                    "min": 0,
+                    "max": 40,
+                    "item_height": 50,
+                    "item_text_left": 100,
+                    "item_text_right": 100,
+                    "color_grid": "#9E9E9E",
+                    "color_clinic_sample": "#888888",
+                    "color_skin": "grey_dark_to_light",
+                    "show_baseline": true,
+                    "show_scale_text": true,
+                    "show_score_vertical_line": true,
+                    "show_score_profile_line": false,
+                    "show_score_circles": true,
+                    "show_settings_block": true,
+                    "range_alpha": 0.1,
+                    "vertical_grid_every_x": 5,
+                    "response_title_path": "messzeitpunkt.mz_text",
+                    "response_date_path": "date"
+                },
+                "scales": [{
+                    "left_title": "Alkohol",
+                    "left_text": "Gering",
+                    "right_title": "Alkohol",
+                    "right_text": "Stark",
+                    "score_path": "AUDIT.AUDIT_Score",
+                    "clinic_sample_var": null
+                }],
+                "ranges": [{
+                    "range_start": 0,
+                    "range_stop": 7,
+                    "text": "Risikoarmer Alkoholkonsum",
+                    "color": "#2E7D32"
+                }, {
+                    "range_start": 7,
+                    "range_stop": 15,
+                    "text": "Verdacht auf eine alkoholbezogene Störung",
+                    "color": "#FBB100"
+                }, {
+                    "range_start": 15,
+                    "range_stop": 40,
+                    "text": "Hohe Wahrscheinlichkeit einer Alkoholabhängigkeit",
+                    "color": "#C62828"
+                }]
+            };
+
+            // Inhalt
+
+
+            // Abfüllen
+            // d.stack.push(titel);
+
+
+            // console.warn('pdfmake_problemsubstanzen', d);
+            // console.log(JSON.stringify(d, null, 2));
+
+            return d;
         };
 
         // ------------------------------------------
@@ -733,71 +1272,51 @@ angular.module('optinomicCalculation').factory('calculation', function() {
         // ------------------------------------------
         calc.getResults = function(myResponses) {
 
-
-            var allResults = [];
-            var currentPatient = myResponses.patient;
-
             var responses_array = myResponses.survey_responses;
+            var allResults = [];
+
             responses_array.forEach(function(response, myindex) {
                 var myResults = {};
                 var result = response.data.response;
 
-                myResults.sum_scores = {};
-                myResults.sum_scores.aggr = parseInt(result['BSCL[sq504V06]']) + parseInt(result['BSCL[sq504V13]']) + parseInt(result['BSCL[sq504V40]']) + parseInt(result['BSCL[sq504V41]']) + parseInt(result['BSCL[sq504V46]']);
-                myResults.sum_scores.angst = parseInt(result['BSCL[sq504V01]']) + parseInt(result['BSCL[sq504V12]']) + parseInt(result['BSCL[sq504V19]']) + parseInt(result['BSCL[sq504V38]']) + parseInt(result['BSCL[sq504V45]']) + parseInt(result['BSCL[sq504V49]']);
-                myResults.sum_scores.depr = parseInt(result['BSCL[sq504V09]']) + parseInt(result['BSCL[sq504V16]']) + parseInt(result['BSCL[sq504V17]']) + parseInt(result['BSCL[sq504V18]']) + parseInt(result['BSCL[sq504V35]']) + parseInt(result['BSCL[sq504V50]']);
-                myResults.sum_scores.paranoid = parseInt(result['BSCL[sq504V04]']) + parseInt(result['BSCL[sq504V10]']) + parseInt(result['BSCL[sq504V24]']) + parseInt(result['BSCL[sq504V48]']) + parseInt(result['BSCL[sq504V51]']);
-                myResults.sum_scores.phobisch = parseInt(result['BSCL[sq504V08]']) + parseInt(result['BSCL[sq504V28]']) + parseInt(result['BSCL[sq504V31]']) + parseInt(result['BSCL[sq504V43]']) + parseInt(result['BSCL[sq504V47]']);
-                myResults.sum_scores.psychot = parseInt(result['BSCL[sq504V03]']) + parseInt(result['BSCL[sq504V14]']) + parseInt(result['BSCL[sq504V34]']) + parseInt(result['BSCL[sq504V44]']) + parseInt(result['BSCL[sq504V53]']);
-                myResults.sum_scores.somat = parseInt(result['BSCL[sq504V02]']) + parseInt(result['BSCL[sq504V07]']) + parseInt(result['BSCL[sq504V23]']) + parseInt(result['BSCL[sq504V29]']) + parseInt(result['BSCL[sq504V30]']) + parseInt(result['BSCL[sq504V33]']) + parseInt(result['BSCL[sq504V37]']);
-                myResults.sum_scores.soz = parseInt(result['BSCL[sq504V20]']) + parseInt(result['BSCL[sq504V21]']) + parseInt(result['BSCL[sq504V22]']) + parseInt(result['BSCL[sq504V42]']);
-                myResults.sum_scores.zwang = parseInt(result['BSCL[sq504V05]']) + parseInt(result['BSCL[sq504V15]']) + parseInt(result['BSCL[sq504V26]']) + parseInt(result['BSCL[sq504V27]']) + parseInt(result['BSCL[sq504V32]']) + parseInt(result['BSCL[sq504V36]']);
-                myResults.sum_scores.zusatz = parseInt(result['BSCL[sq504V11]']) + parseInt(result['BSCL[sq504V25]']) + parseInt(result['BSCL[sq504V39]']) + parseInt(result['BSCL[sq504V52]']);
-
-                myResults.scale_scores = {};
-                myResults.scale_scores.aggr = parseFloat(myResults.sum_scores.aggr / 5);
-                myResults.scale_scores.angst = parseFloat(myResults.sum_scores.angst / 6);
-                myResults.scale_scores.depr = parseFloat(myResults.sum_scores.depr / 6);
-                myResults.scale_scores.paranoid = parseFloat(myResults.sum_scores.paranoid / 5);
-                myResults.scale_scores.phobisch = parseFloat(myResults.sum_scores.phobisch / 5);
-                myResults.scale_scores.psychot = parseFloat(myResults.sum_scores.psychot / 5);
-                myResults.scale_scores.somat = parseFloat(myResults.sum_scores.somat / 7);
-                myResults.scale_scores.soz = parseFloat(myResults.sum_scores.soz / 4);
-                myResults.scale_scores.zwang = parseFloat(myResults.sum_scores.zwang / 6);
-                myResults.scale_scores.zusatz = parseFloat(myResults.sum_scores.zusatz / 4);
-
-                myResults.sum_scores.gsi =
-                    myResults.sum_scores.aggr +
-                    myResults.sum_scores.angst +
-                    myResults.sum_scores.depr +
-                    myResults.sum_scores.paranoid +
-                    myResults.sum_scores.phobisch +
-                    myResults.sum_scores.psychot +
-                    myResults.sum_scores.somat +
-                    myResults.sum_scores.soz +
-                    myResults.sum_scores.zwang +
-                    myResults.sum_scores.zusatz
-
-                myResults.scale_scores.gsi = parseFloat(myResults.sum_scores.gsi / 53);
+                var patient = myResponses.patient.data;
 
 
-                myResults.t_scores = {};
-                myResults.t_scores.gsi = calc.get_t_score(0, myResults.sum_scores.gsi);
-                myResults.t_scores.psychot = calc.get_t_score(1, myResults.scale_scores.psychot);
-                myResults.t_scores.paranoid = calc.get_t_score(2, myResults.sum_scores.paranoid);
-                myResults.t_scores.phobisch = calc.get_t_score(3, myResults.sum_scores.phobisch);
-                myResults.t_scores.aggr = calc.get_t_score(4, myResults.sum_scores.aggr);
-                myResults.t_scores.angst = calc.get_t_score(5, myResults.sum_scores.angst);
-                myResults.t_scores.depr = calc.get_t_score(6, myResults.sum_scores.depr);
-                myResults.t_scores.soz = calc.get_t_score(7, myResults.sum_scores.soz);
-                myResults.t_scores.zwang = calc.get_t_score(8, myResults.sum_scores.zwang);
-                myResults.t_scores.somat = calc.get_t_score(9, myResults.sum_scores.somat);
+                // -------------------------------------
 
-                myResults.stanine = {};
-                myResults.stanine.gsi = calc.get_stanine(0, myResults.sum_scores.gsi, currentPatient.data.gender, result['Eintrittsort']);
+                // Messzeitpunkt
+                myResults.messzeitpunkt = {
+                    "mz_id": 1,
+                    "mz_text": "Eintritt"
+                };
+
+                if ('VMEB001' in result) {
+                    myResults.messzeitpunkt.mz_date = result.VMEB001;
+                } else {
+                    myResults.messzeitpunkt.mz_date = result.datestamp
+                };
+                myResults.messzeitpunkt.mz_datum = calc.formatDateCH(myResults.messzeitpunkt.mz_date);
+
+                // AUDIT & FAGERSTROEM
+                myResults.AUDIT = calc.AUDIT_Score(result, patient.gender);
+                myResults.FAGERSTROEM = calc.FAGERSTROEM_Score(result, patient);
+
+                // Problemsubstanzen
+                myResults.problemsubstanzen = calc.Problem_Substanzen(result, patient);
 
 
-                // write results back
+                // Prebuild PDF (http://pdfmake.org/)
+                myResults.pdfmake = {};
+                myResults.pdfmake.problemsubstanzen_ol = calc.pdfmake_problemsubstanzen(myResults.problemsubstanzen, true);
+                myResults.pdfmake.problemsubstanzen_text = calc.pdfmake_problemsubstanzen(myResults.problemsubstanzen, false);
+                myResults.pdfmake.audit = calc.pdfmake_audit(myResults);
+
+
+
+                // -------------------------------------
+                // Write Results for the Return
+                // Do not modify stuff here
+                // myResults.full = myResponses;
                 myResults.hash = result['optinomixHASH'];
                 myResults.response = response;
                 allResults.push(myResults);
@@ -809,6 +1328,10 @@ angular.module('optinomicCalculation').factory('calculation', function() {
 
         // Return
         return calc.getResults(responses);
+
+
+
+
 
 
         // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
