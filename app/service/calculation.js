@@ -1017,15 +1017,25 @@ angular.module('optinomicCalculation').factory('calculation', function() {
             };
 
 
+            // Return
+            var return_obj = {
+                "substanzen": problemsubstanzen,
+                "description": summary_description
+            };
+
+
+            return return_obj;
+        };
+
+
+        // Problemsubstanzen aufzählen
+        calc.Zusatzangaben = function(response, patient) {
+
             // Anzahl Entzüge
             var anz_entzuege = parseInt(response['VYEE010']);
             var entzuege = {
                 "angabe": anz_entzuege,
-                "text": ""
-            };
-
-            if (anz_entzuege === 999) {
-                entzuege.text = "Die Anzahl der bisherigen Entzugsbehandlungen ist nicht bekannt."
+                "text": "Die Anzahl der bisherigen Entzugsbehandlungen ist nicht bekannt."
             };
 
             if (anz_entzuege === 0) {
@@ -1085,34 +1095,46 @@ angular.module('optinomicCalculation').factory('calculation', function() {
             var hauptproblem_substanz = parseInt(response['VNED010']);
             var konsumalter_regelmaessig = parseInt(response['VMED050']);
             var konsumalter_problematisch = parseInt(response['VMED060']);
+
+            if (hauptproblem_substanz !== 999) {
+                var hauptproblem_substanz_text = hauptproblemsubstanzen[hauptproblem_substanz - 1];
+            } else {
+                var hauptproblem_substanz_text = "Unbekannt";
+            };
+             
+
             var konsumalter = {
-                "angabe_hauptproblem_substanz": hauptproblem_substanz,
-                "hauptproblem_substanz": hauptproblemsubstanzen[hauptproblem_substanz - 1],
-                "angabe_regelmaessig": konsumalter_regelmaessig,
-                "angabe_problematisch": konsumalter_problematisch,
-                "text_konsumalter": ""
+                "hauptproblem_substanz_angabe": hauptproblem_substanz,
+                "hauptproblem_substanz_text": hauptproblem_substanz_text,
+                "konsumalter_regelmaessig_angabe": konsumalter_regelmaessig,
+                "konsumalter_probplematisch_angabe": konsumalter_problematisch,
+                "kunsumalter_text": "",
+                "konsumalter_done": false
             };
 
             if ((konsumalter_regelmaessig !== undefined) && (konsumalter_regelmaessig !== null)) {
-                if ((konsumalter_problematisch !== undefined) && (konsumalter_problematisch !== null)) {
-                    konsumalter.text_konsumalter = "Seit dem Alter von " + konsumalter.angabe_regelmaessig + " Jahren wurde die Hauptproblemsubstanz «" + konsumalter.hauptproblem_substanz + "» regelmässig konsumiert. ";
-                    konsumalter.text_konsumalter = konsumalter.text_konsumalter + "Ein problematischer Konsum besteht seit dem Alter von " + konsumalter.angabe_problematisch + " Jahren.";
+                if (hauptproblem_substanz_text !== "Unbekannt") {
+                    konsumalter.kunsumalter_text = "Seit dem Alter von " + konsumalter.konsumalter_regelmaessig_angabe + " Jahren wurde die Hauptproblemsubstanz «" + konsumalter.hauptproblem_substanz_text + "» regelmässig konsumiert. ";
+                    konsumalter.hauptproblem_substanz_found = false;
+                } else {
+                    konsumalter.kunsumalter_text = "Seit dem Alter von " + konsumalter.konsumalter_regelmaessig_angabe + " Jahren wurde die Hauptproblemsubstanz regelmässig konsumiert. ";
+                    konsumalter.hauptproblem_substanz_found = true;
                 };
+                konsumalter.konsumalter_done = true;
+            };
+
+            if ((konsumalter_problematisch !== undefined) && (konsumalter_problematisch !== null)) {
+                konsumalter.kunsumalter_text = konsumalter.kunsumalter_text + "Ein problematischer Konsum besteht seit dem Alter von " + konsumalter.konsumalter_probplematisch_angabe + " Jahren.";
+                konsumalter.konsumalter_done = true;
             };
 
             var zusatz = konsumalter;
-            zusatz.angabe_entzuege = entzuege.angabe;
-            zusatz.text_entzuege = entzuege.text;
+            zusatz.entzuege_angabe = entzuege.angabe;
+            zusatz.entzuege_text = entzuege.text;
 
             // Return
-            var return_obj = {
-                "zusatz": zusatz,
-                "substanzen": problemsubstanzen,
-                "description": summary_description
-            };
 
-
-            return return_obj;
+            return zusatz;
         };
 
 
@@ -1193,14 +1215,41 @@ angular.module('optinomicCalculation').factory('calculation', function() {
 
 
             // console.warn('pdfmake_problemsubstanzen', d);
-            console.log(JSON.stringify(d, null, 2));
+            // console.log(JSON.stringify(d, null, 2));
+
+            return d;
+        };
+
+        calc.pdfmake_zusatzangaben = function(zusatz) {
+
+            // console.warn('START: pdfmake_problemsubstanzen', ps);
+
+            var d = {
+                "stack": [],
+            };
+
+            // Inhalt
+            
+
+            var texte = {
+                "text": zusatz.kunsumalter_text + " " + zusatz.entzuege_text,
+                "style": "p"
+            };
+
+            
+            // Abfüllen
+            d.stack.push(texte);
+
+
+            // console.warn('pdfmake_problemsubstanzen', d);
+            // console.log(JSON.stringify(d, null, 2));
 
             return d;
         };
 
         calc.pdfmake_audit = function(audit) {
 
-            console.warn('START: pdfmake_audit', audit);
+            // console.warn('START: pdfmake_audit', audit);
 
             var d = {
                 "stack": [],
@@ -1303,13 +1352,18 @@ angular.module('optinomicCalculation').factory('calculation', function() {
 
                 // Problemsubstanzen
                 myResults.problemsubstanzen = calc.Problem_Substanzen(result, patient);
+                myResults.zusatzangaben = calc.Zusatzangaben(result, patient);
+
 
 
                 // Prebuild PDF (http://pdfmake.org/)
                 myResults.pdfmake = {};
                 myResults.pdfmake.problemsubstanzen_ol = calc.pdfmake_problemsubstanzen(myResults.problemsubstanzen, true);
                 myResults.pdfmake.problemsubstanzen_text = calc.pdfmake_problemsubstanzen(myResults.problemsubstanzen, false);
-                myResults.pdfmake.audit = calc.pdfmake_audit(myResults);
+                myResults.pdfmake.zusatzangaben_text = calc.pdfmake_zusatzangaben(myResults.zusatzangaben);
+                
+
+                // myResults.pdfmake.audit = calc.pdfmake_audit(myResults);
 
 
 
