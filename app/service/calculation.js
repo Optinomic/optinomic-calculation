@@ -22,9 +22,9 @@ angular.module('optinomicCalculation').factory('calculation', function() {
             "options": {
                 "min": "auto",
                 "max": "auto",
-                "item_height": 64,
+                "item_height": 60,
                 "item_text_left": 68,
-                "item_text_right": 160,
+                "item_text_right": 158,
                 "color_grid": "#E0E0E0",
                 "color_clinic_sample": "#888888",
                 "color_skin": "grey_dark_to_light",
@@ -113,7 +113,7 @@ angular.module('optinomicCalculation').factory('calculation', function() {
             }, {
                 "left_title": "GSI",
                 "left_text": "Global Severity Index",
-                "right_title": "",
+                "right_title": "GSI",
                 "right_text": "Durchschnittliche Belastung in allen Bereichen",
                 "score_path": "all_results.gsi_global_severity_index_z_score",
                 "clinic_sample_var": "gsi_global_severity_index_z_score",
@@ -170,6 +170,13 @@ angular.module('optinomicCalculation').factory('calculation', function() {
                     };
                 };
 
+                d.options.offset_top = 10;
+
+                var item_height = 60;
+                if ("item_height" in d.options) {
+                    item_height = d.options.item_height;
+                };
+
                 var item_text_left = 100;
                 if ("item_text_left" in d.options) {
                     item_text_left = d.options.item_text_left;
@@ -202,6 +209,12 @@ angular.module('optinomicCalculation').factory('calculation', function() {
 
                 if ("scales" in definition) {
                     d.scales = definition.scales;
+
+                    if (d.scales.length > 0) {
+                        d.options.chart_height = d.scales.length * item_height;
+                    } else {
+                        d.options.chart_height = 0;
+                    };
                 };
 
 
@@ -282,6 +295,7 @@ angular.module('optinomicCalculation').factory('calculation', function() {
 
                                 var text = {
                                     "text": scale.left_text,
+                                    "fontSize": 8,
                                     "bold": false
                                 };
 
@@ -299,6 +313,7 @@ angular.module('optinomicCalculation').factory('calculation', function() {
 
                                 var text = {
                                     "text": scale.left_text,
+                                    "fontSize": 8,
                                     "bold": false
                                 };
 
@@ -363,7 +378,7 @@ angular.module('optinomicCalculation').factory('calculation', function() {
                             ],
                             "relativePosition": {
                                 "x": 0,
-                                "y": scaleID * d.options.item_height
+                                "y": (scaleID * d.options.item_height) + d.options.offset_top
                             },
                             "columnGap": 10
                         };
@@ -379,17 +394,48 @@ angular.module('optinomicCalculation').factory('calculation', function() {
                 return _scales_text;
             };
 
+
+            var _beschriftung_top = function(d) {
+
+                var beschriftung_top = {
+                    "stack": []
+                };
+
+
+                for (i = 0; i < d.options.min_max_range + 1; i++) {
+
+                    var my_x = _getXPos(d.options.item_min, d.options.item_max, d.options.chart_width, d.options.item_min + i);
+
+
+                    var inner = {
+                        "color": "#616161",
+                        "fontSize": 8,
+                        "alignment": "left",
+                        "text": d.options.item_min + i,
+                        "relativePosition": {
+                            "x": d.options.item_text_left + 8 + my_x,
+                            "y": 0
+                        }
+                    };
+
+                    // console.warn('vertical: ', d.options.item_min + i, my_x, vertical_line);
+
+                    beschriftung_top.stack.push(inner);
+
+                };
+
+                return beschriftung_top;
+            };
+
+
+
             var _grid = function(d) {
 
                 // INIT
 
-
-
-
                 var _grid = {
                     "stack": [],
                 };
-
 
                 var _grid_inner = {
                     "relativePosition": {
@@ -399,9 +445,9 @@ angular.module('optinomicCalculation').factory('calculation', function() {
                     "canvas": [{
                         "type": "rect",
                         "x": 0,
-                        "y": 0,
+                        "y": d.options.offset_top,
                         "w": d.options.chart_width,
-                        "h": d.scales.length * d.options.item_height,
+                        "h": d.options.chart_height,
                         "lineColor": d.options.color_grid
                     }]
                 };
@@ -415,9 +461,9 @@ angular.module('optinomicCalculation').factory('calculation', function() {
                         var horizontal_line = {
                             "type": "line",
                             "x1": 0,
-                            "y1": scaleID * d.options.item_height,
+                            "y1": (scaleID * d.options.item_height) + d.options.offset_top,
                             "x2": d.options.chart_width,
-                            "y2": scaleID * d.options.item_height,
+                            "y2": (scaleID * d.options.item_height) + d.options.offset_top,
                             "lineWidth": 1,
                             "lineColor": d.options.color_grid
                         };
@@ -432,6 +478,29 @@ angular.module('optinomicCalculation').factory('calculation', function() {
                 };
 
                 // Vertical Line
+                for (i = 0; i < d.options.min_max_range; i++) {
+
+                    var my_x = _getXPos(d.options.item_min, d.options.item_max, d.options.chart_width, d.options.item_min + i);
+                    var line_width = 1;
+                    if ((d.options.item_min + i === 0) && (i !== 0)) {
+                        line_width = 2;
+                    };
+
+                    var vertical_line = {
+                        "type": "line",
+                        "x1": my_x,
+                        "y1": d.options.offset_top,
+                        "x2": my_x,
+                        "y2": d.options.chart_height + d.options.offset_top,
+                        "lineWidth": line_width,
+                        "lineColor": d.options.color_grid
+                    };
+
+                    // console.warn('vertical: ', d.options.item_min + i, my_x, vertical_line);
+
+                    _grid_inner.canvas.push(vertical_line);
+
+                };
 
 
                 _grid.stack.push(_grid_inner);
@@ -600,6 +669,15 @@ angular.module('optinomicCalculation').factory('calculation', function() {
                 return d;
             };
 
+            var _getXPos = function(min, max, svg_width_100, current_value) {
+                var width_value = null
+                if (current_value !== undefined) {
+                    var width_100 = Math.abs(min) + Math.abs(max);
+                    width_value = (svg_width_100 / width_100) * (current_value + Math.abs(min));
+                };
+                return width_value;
+            };
+
 
             // Run
             var init = _init(scores, definition);
@@ -615,6 +693,7 @@ angular.module('optinomicCalculation').factory('calculation', function() {
 
             if (init.have_data === true) {
                 chart_stack.push(_scales_text(init));
+                chart_stack.push(_beschriftung_top(init));
                 chart_stack.push(_grid(init));
             };
 
@@ -628,7 +707,7 @@ angular.module('optinomicCalculation').factory('calculation', function() {
                     "x": -3,
                     "y": 0,
                     "w": 0,
-                    "h": init.scales.length * init.options.item_height,
+                    "h": init.options.offset_top + init.options.chart_height,
                     "lineColor": "#FFFFFF"
                 }]
             };
