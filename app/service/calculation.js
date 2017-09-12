@@ -22,12 +22,12 @@ angular.module('optinomicCalculation').factory('calculation', function() {
             "options": {
                 "min": "auto",
                 "max": "auto",
-                "item_height": 58,
+                "item_height": 48,
                 "item_text_left": 68,
-                "item_text_right": 158,
+                "item_text_right": 173,
                 "color_grid": "#E0E0E0",
                 "color_clinic_sample": "#888888",
-                "color_skin": "grey_dark_to_light",
+                "color_skin": "indigo_grey_pink",
                 "show_baseline": false,
                 "show_scale_text": true,
                 "show_score_vertical_line": false,
@@ -47,45 +47,21 @@ angular.module('optinomicCalculation').factory('calculation', function() {
                 "clinic_sample_var": "somatisierung_z_score",
                 "items": 7
             }, {
-                "left_title": "Psychotizismus",
+                "left_title": "Zwanghaftigkeit",
                 "left_text": "",
                 "right_title": "",
-                "right_text": "Gefühl der Isolation und zwischenmenschlichen Entfremdung. Verzerrter, isolierter Lebensstil bis zu Halluzination und Gedankenzerfall.",
-                "score_path": "all_results.psychotizismus_z_score",
-                "clinic_sample_var": "psychotizismus_z_score",
-                "items": 5
-            }, {
-                "left_title": "Paranoides Denken",
-                "left_text": "",
-                "right_title": "",
-                "right_text": "Misstrauen, Minderwertigkeitsgefühle: Gedankenprojektion, Feindseligkeit, Argwohn, Grandiosität, Einengung, Angst vor Autonomieverlust und wahnhafte Täuschung.",
-                "score_path": "all_results.paranoides_denken_z_score",
-                "clinic_sample_var": "paranoides_denken_z_score",
-                "items": 5
-            }, {
-                "left_title": "Phobische Angst",
-                "left_text": "",
-                "right_title": "",
-                "right_text": "Andauernde und unangemessene Furcht als Reaktion auf eine Person, einen Ort, ein Objekt oder einer Situation, die zu Vermeidungs- oder Fluchtverhalten führt.",
-                "score_path": "all_results.phobische_angst_z_score",
-                "clinic_sample_var": "phobische_angst_z_score",
-                "items": 5
-            }, {
-                "left_title": "Aggressivität / Feindseligkeit",
-                "left_text": "",
-                "right_title": "",
-                "right_text": "Reizbarkeit und Unausgeglichenheit bis hin zu starker Aggressivität. Ärger, Aggression, Irritierbarkeit, Zorn und Verstimmung.",
-                "score_path": "all_results.aggressivit__t___feindseligkeit_z_score",
-                "clinic_sample_var": "aggressivit__t___feindseligkeit_z_score",
-                "items": 5
-            }, {
-                "left_title": "Ängstlichkeit",
-                "left_text": "",
-                "right_title": "",
-                "right_text": "Angst mit Nervosität, Spannungen und Zittern, Panikattacken und Schreckgefühlen, Gefühle von Besorgnis und Furcht.",
-                "score_path": "all_results.__ngstlichkeit_z_score",
-                "clinic_sample_var": "__ngstlichkeit_z_score",
+                "right_text": "Gedanken, Impulse und Handlungen, die konstant vorhanden und nicht änderbar und ich-fremd oder ungewollt erlebt werden, Kognitive Leistungsstörungen.",
+                "score_path": "all_results.zwanghaftigkeit_z_score",
+                "clinic_sample_var": "zwanghaftigkeit_z_score",
                 "items": 6
+            }, {
+                "left_title": "Unsicherheit im Sozialkontakt",
+                "left_text": "",
+                "right_title": "",
+                "right_text": "Unzulänglichkeits- und Minderwertigkeitsgefühle, Selbstabwertungen im sozialen Kontakt, Selbstzweifel, Selbstunsicherheit und negative Erwartungen bzgl. dem eigenen zwischenmenschlichen   Verhalten.",
+                "score_path": "all_results.unsicherheit_im_sozialkontakt_z_score",
+                "clinic_sample_var": "unsicherheit_im_sozialkontakt_z_score",
+                "items": 4
             }, {
                 "left_title": "Depressivität",
                 "left_text": "",
@@ -95,25 +71,49 @@ angular.module('optinomicCalculation').factory('calculation', function() {
                 "clinic_sample_var": "depressivit__t_z_score",
                 "items": 6
             }, {
-                "left_title": "Unsicherheit im Sozialkontakt",
+                "left_title": "Ängstlichkeit",
                 "left_text": "",
                 "right_title": "",
-                "right_text": "Unzulänglichkeits- und Minderwertigkeitsgefühle, Selbstabwertungen im sozialen Kontakt, Selbstzweifel, Selbstunsicherheit.",
-                "score_path": "all_results.unsicherheit_im_sozialkontakt_z_score",
-                "clinic_sample_var": "unsicherheit_im_sozialkontakt_z_score",
-                "items": 4
-            }, {
-                "left_title": "Zwanghaftigkeit",
-                "left_text": "",
-                "right_title": "",
-                "right_text": "Gedanken, Impulse und Handlungen, die konstant vorhanden und nicht änderbar und ich-fremd oder ungewollt erlebt werden, Kognitive Leistungsstörungen.",
-                "score_path": "all_results.zwanghaftigkeit_z_score",
-                "clinic_sample_var": "zwanghaftigkeit_z_score",
+                "right_text": "Angst mit Nervosität, Spannungen und Zittern, Panikattacken und Schreckgefühlen, Gefühle von Besorgnis und Furcht.",
+                "score_path": "all_results.__ngstlichkeit_z_score",
+                "clinic_sample_var": "__ngstlichkeit_z_score",
                 "items": 6
+            }, {
+                "left_title": "Aggressivität / Feindseligkeit",
+                "left_text": "",
+                "right_title": "",
+                "right_text": "Reizbarkeit und Unausgeglichenheit bis hin zu starker Aggressivität. Ärger, Aggression, Irritierbarkeit, Zorn und Verstimmung.",
+                "score_path": "all_results.aggressivit__t___feindseligkeit_z_score",
+                "clinic_sample_var": "aggressivit__t___feindseligkeit_z_score",
+                "items": 5
+            }, {
+                "left_title": "Phobische Angst",
+                "left_text": "",
+                "right_title": "",
+                "right_text": "Andauernde und unangemessene Furcht als Reaktion auf eine Person, einen Platz, ein Objekt oder eine Situation, die zu Vermeidungs- oder Fluchtverhalten führt.",
+                "score_path": "all_results.phobische_angst_z_score",
+                "clinic_sample_var": "phobische_angst_z_score",
+                "items": 5
+            }, {
+                "left_title": "Paranoides Denken",
+                "left_text": "",
+                "right_title": "",
+                "right_text": "Misstrauen, Minderwertigkeitsgefühle, paranoides Denken: Gedankenprojektion, Feindseligkeit, Einengung, Angst vor Autonomieverlust und wahnhafte Täuschung.",
+                "score_path": "all_results.paranoides_denken_z_score",
+                "clinic_sample_var": "paranoides_denken_z_score",
+                "items": 5
+            }, {
+                "left_title": "Psychotizismus",
+                "left_text": "",
+                "right_title": "",
+                "right_text": "Gefühl der Isolation und zwischenmenschlichen Entfremdung. Verzerrter, isolierter Lebensstil bis zu Halluzination und Gedankenzerfall.",
+                "score_path": "all_results.psychotizismus_z_score",
+                "clinic_sample_var": "psychotizismus_z_score",
+                "items": 5
             }, {
                 "left_title": "GSI",
                 "left_text": "Global Severity Index",
-                "right_title": "GSI",
+                "right_title": "",
                 "right_text": "Durchschnittliche Belastung in allen Bereichen",
                 "score_path": "all_results.gsi_global_severity_index_z_score",
                 "clinic_sample_var": "gsi_global_severity_index_z_score",
@@ -572,6 +572,7 @@ angular.module('optinomicCalculation').factory('calculation', function() {
 
                 var points_obj = {};
                 var lines_count = 0;
+                var dots = [];
 
                 d.scales.forEach(function(scale, scaleID) {
                     scale.scores.forEach(function(score, scoreID) {
@@ -591,22 +592,52 @@ angular.module('optinomicCalculation').factory('calculation', function() {
                         };
                         points_obj[scoreID].push(point);
 
+
+                        // Circles
+                        if (d.options.show_score_circles) {
+                            var circle_color = "#FFFFFF";
+                            d.ranges.forEach(function(range, rangeID) {
+                                if ((score.value >= range.range_start) && (score.value <= range.range_stop)) {
+                                    circle_color = range.color;
+                                }
+                            });
+                            var circle = {
+                                "type": "ellipse",
+                                "x": my_x,
+                                "y": my_y,
+                                "color": circle_color,
+                                "lineColor": _getColor(scoreID, d.options.color_skin),
+                                "lineWidth": 2,
+                                "fillOpacity": 0.9,
+                                "r1": 4.25,
+                                "r2": 4.25
+                            };
+
+                            dots.push(circle);
+                        };
+
+
                     });
                 });
 
+                // lines
                 for (i = 0; i < lines_count; i++) {
                     var score_line = {
                         "type": "polyline",
-                        "lineWidth": 2,
-                        "lineColor": "blue",
+                        "lineWidth": 3,
+                        "lineColor": _getColor(i, d.options.color_skin),
                         "points": points_obj[i]
                     };
 
                     _inner.canvas.push(score_line);
                 };
 
-                console.warn('lines_count', lines_count, points_obj);
-
+                // dots
+                if (d.options.show_score_circles) {
+                    dots.forEach(function(dot, dotID) {
+                        _inner.canvas.push(dot);
+                    });
+                };
 
                 _return.stack.push(_inner);
 
@@ -771,6 +802,86 @@ angular.module('optinomicCalculation').factory('calculation', function() {
                     G = f >> 8 & 0x00FF,
                     B = f & 0x0000FF;
                 return "#" + (0x1000000 + (Math.round((t - R) * p) + R) * 0x10000 + (Math.round((t - G) * p) + G) * 0x100 + (Math.round((t - B) * p) + B)).toString(16).slice(1);
+            };
+
+            var _getColor = function(id, color_skin) {
+                color_skin = color_skin === undefined ?
+                    'default' :
+                    color_skin;
+
+                var colors = [];
+
+                if (color_skin === 'default') {
+                    colors.push("#3F51B5");
+                    colors.push("#E91E63");
+                    colors.push("#00BCD4");
+                    colors.push("#8BC34A");
+                    colors.push("#FFC107");
+                    colors.push("#795548");
+
+                    colors.push("#673AB7");
+                    colors.push("#F44336");
+                    colors.push("#03A9F4");
+                    colors.push("#4CAF50");
+                    colors.push("#FFEB3B");
+                    colors.push("#FF5722");
+
+                    colors.push("#2196F3");
+                    colors.push("#9C27B0");
+                    colors.push("#009688");
+                    colors.push("#CDDC39");
+                    colors.push("#FF9800");
+                    colors.push("#607D8B");
+                };
+
+                if (color_skin === 'grey_dark_to_light') {
+                    colors.push("#212121");
+                    colors.push("#616161");
+                    colors.push("#9E9E9E");
+                    colors.push("#E0E0E0");
+                    colors.push("#F5F5F5");
+                };
+
+                if (color_skin === 'indigo_dark_to_light') {
+                    colors.push("#1A237E");
+                    colors.push("#303F9F");
+                    colors.push("#3F51B5");
+                    colors.push("#7986CB");
+                    colors.push("#C5CAE9");
+                };
+
+                if (color_skin === 'pink_dark_to_light') {
+                    colors.push("#880E4F");
+                    colors.push("#C2185B");
+                    colors.push("#E91E63");
+                    colors.push("#F06292");
+                    colors.push("#F8BBD0");
+                };
+
+                if (color_skin === 'indigo_grey_pink') {
+                    colors.push("#1A237E");
+                    colors.push("#212121");
+                    colors.push("#880E4F");
+                    colors.push("#3F51B5");
+                    colors.push("#9E9E9E");
+                    colors.push("#E91E63");
+                    colors.push("#C5CAE9");
+                    colors.push("#F5F5F5");
+                    colors.push("#F8BBD0");
+                };
+
+                if (color_skin === 'zebra') {
+                    colors.push("#212121");
+                    colors.push("#EEEEEE");
+                };
+
+                if (id > colors.length - 1) {
+                    var floor = Math.floor(id / colors.length);
+                    var corrected = id - floor - 1;
+                    return colors[corrected];
+                } else {
+                    return colors[id];
+                };
             };
 
 
