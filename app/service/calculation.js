@@ -22,7 +22,7 @@ angular.module('optinomicCalculation').factory('calculation', function() {
             "options": {
                 "min": "auto",
                 "max": "auto",
-                "item_height": 60,
+                "item_height": 58,
                 "item_text_left": 68,
                 "item_text_right": 158,
                 "color_grid": "#E0E0E0",
@@ -295,7 +295,7 @@ angular.module('optinomicCalculation').factory('calculation', function() {
 
                                 var text = {
                                     "text": scale.left_text,
-                                    "fontSize": 8,
+                                    "fontSize": 7.5,
                                     "bold": false
                                 };
 
@@ -313,7 +313,7 @@ angular.module('optinomicCalculation').factory('calculation', function() {
 
                                 var text = {
                                     "text": scale.left_text,
-                                    "fontSize": 8,
+                                    "fontSize": 7.5,
                                     "bold": false
                                 };
 
@@ -394,7 +394,6 @@ angular.module('optinomicCalculation').factory('calculation', function() {
                 return _scales_text;
             };
 
-
             var _beschriftung_top = function(d) {
 
                 var beschriftung_top = {
@@ -426,8 +425,6 @@ angular.module('optinomicCalculation').factory('calculation', function() {
 
                 return beschriftung_top;
             };
-
-
 
             var _grid = function(d) {
 
@@ -509,6 +506,113 @@ angular.module('optinomicCalculation').factory('calculation', function() {
                 return _grid;
             };
 
+            var _ranges = function(d) {
+
+                var _return = {
+                    "stack": [],
+                };
+
+                var _inner = {
+                    "relativePosition": {
+                        "x": d.options.item_text_left + 10,
+                        "y": d.options.offset_top
+                    },
+                    "canvas": []
+                };
+
+
+                d.ranges.forEach(function(range, rangeID) {
+
+
+                    // {range_start: -999, range_stop: 1, text: "Gesunde Ausprägung", color: "#2E7D32"}
+
+                    var my_x = 0;
+                    if (range.range_start !== -999) {
+                        my_x = _getXPos(d.options.item_min, d.options.item_max, d.options.chart_width, range.range_start);
+                    };
+
+                    var my_y = d.options.chart_width;
+                    if (range.range_stop !== 999) {
+                        my_y = _getXPos(d.options.item_min, d.options.item_max, d.options.chart_width, range.range_stop);
+                    };
+
+
+                    var range = {
+                        "type": "rect",
+                        "x": my_x,
+                        "y": 0,
+                        "w": my_y - my_x,
+                        "h": d.options.chart_height,
+                        "color": _shadeColor(range.color, 1 - d.options.range_alpha)
+                    };
+
+                    _inner.canvas.push(range);
+                });
+
+
+                _return.stack.push(_inner);
+
+                return _return;
+            };
+
+            var _scores = function(d) {
+
+                var _return = {
+                    "stack": [],
+                };
+
+                var _inner = {
+                    "relativePosition": {
+                        "x": d.options.item_text_left + 10,
+                        "y": d.options.offset_top
+                    },
+                    "canvas": []
+                };
+
+
+                var points_obj = {};
+                var lines_count = 0;
+
+                d.scales.forEach(function(scale, scaleID) {
+                    scale.scores.forEach(function(score, scoreID) {
+
+                        lines_count = scoreID + 1;
+                        if (points_obj[scoreID] === undefined) {
+                            points_obj[scoreID] = [];
+                        };
+
+                        my_x = _getXPos(d.options.item_min, d.options.item_max, d.options.chart_width, score.value);
+
+                        var my_y = (scaleID * d.options.item_height) + (d.options.item_height / 2);
+
+                        var point = {
+                            "x": my_x,
+                            "y": my_y,
+                        };
+                        points_obj[scoreID].push(point);
+
+                    });
+                });
+
+                for (i = 0; i < lines_count; i++) {
+                    var score_line = {
+                        "type": "polyline",
+                        "lineWidth": 2,
+                        "lineColor": "blue",
+                        "points": points_obj[i]
+                    };
+
+                    _inner.canvas.push(score_line);
+                };
+
+                console.warn('lines_count', lines_count, points_obj);
+
+
+                _return.stack.push(_inner);
+
+                return _return;
+            };
+
             var _scales_scores = function(scores, init) {
 
 
@@ -550,25 +654,6 @@ angular.module('optinomicCalculation').factory('calculation', function() {
                     };
 
                 });
-
-                // Check in scales/scores
-                // all_scales.forEach(function(scale, scaleID) {
-                //     scale.scores.forEach(function(score, scoreID) {
-                //         if (do_min) {
-                //             if (score.value < d.item_min) {
-                //                 d.item_min = score.value;
-                //             };
-                //         };
-                //         if (do_max) {
-                //             if (score.value > d.item_max) {
-                //                 d.item_max = score.value;
-                //             };
-                //         };
-                //     });
-                // });
-
-                //Round a number upward to its nearest integer:
-
 
                 return init;
             };
@@ -678,6 +763,16 @@ angular.module('optinomicCalculation').factory('calculation', function() {
                 return width_value;
             };
 
+            var _shadeColor = function(color, percent) {
+                var f = parseInt(color.slice(1), 16),
+                    t = percent < 0 ? 0 : 255,
+                    p = percent < 0 ? percent * -1 : percent,
+                    R = f >> 16,
+                    G = f >> 8 & 0x00FF,
+                    B = f & 0x0000FF;
+                return "#" + (0x1000000 + (Math.round((t - R) * p) + R) * 0x10000 + (Math.round((t - G) * p) + G) * 0x100 + (Math.round((t - B) * p) + B)).toString(16).slice(1);
+            };
+
 
             // Run
             var init = _init(scores, definition);
@@ -694,7 +789,9 @@ angular.module('optinomicCalculation').factory('calculation', function() {
             if (init.have_data === true) {
                 chart_stack.push(_scales_text(init));
                 chart_stack.push(_beschriftung_top(init));
+                chart_stack.push(_ranges(init));
                 chart_stack.push(_grid(init));
+                chart_stack.push(_scores(init));
             };
 
 
@@ -714,106 +811,6 @@ angular.module('optinomicCalculation').factory('calculation', function() {
             chart_stack.push(spacer);
 
 
-            var example_chart_grid = {
-                "stack": [{
-                        "relativePosition": {
-                            "x": 118,
-                            "y": 0
-                        },
-                        "canvas": [{
-                            "type": "rect",
-                            "x": 0,
-                            "y": 0,
-                            "w": 280,
-                            "h": 120,
-                            "lineColor": "#E0E0E0"
-                        }]
-                    },
-                    {
-                        "stack": [{
-                                "columns": [{
-                                        "width": 110,
-                                        "style": "chart_p",
-                                        "alignment": "right",
-                                        "text": [{
-                                                "text": "Links: ",
-                                                "bold": true
-                                            },
-                                            {
-                                                "text": "Dies ist die Beschreibung von einem sehr sehr sehr laaaangen Texten",
-                                                "bold": false
-                                            }
-                                        ]
-                                    },
-                                    {
-                                        "width": "*",
-                                        "text": ""
-                                    },
-                                    {
-                                        "width": 110,
-                                        "style": "chart_p",
-                                        "alignment": "left",
-                                        "text": [{
-                                                "text": "Rechts: ",
-                                                "bold": true
-                                            },
-                                            {
-                                                "text": "Dies ist die Beschreibung",
-                                                "bold": false
-                                            }
-                                        ]
-                                    }
-                                ],
-                                "relativePosition": {
-                                    "x": 0,
-                                    "y": 0
-                                },
-                                "columnGap": 10
-                            },
-                            {
-                                "columns": [{
-                                        "width": 110,
-                                        "style": "chart_p",
-                                        "alignment": "right",
-                                        "text": [{
-                                                "text": "Links: ",
-                                                "bold": true
-                                            },
-                                            {
-                                                "text": "Dies ist die Beschreibung von laaaangen Texten",
-                                                "bold": false
-                                            }
-                                        ]
-                                    },
-                                    {
-                                        "width": "*",
-                                        "text": ""
-                                    },
-                                    {
-                                        "width": 110,
-                                        "style": "chart_p",
-                                        "alignment": "left",
-                                        "text": [{
-                                                "text": "Rechts: ",
-                                                "bold": true
-                                            },
-                                            {
-                                                "text": "Dies ist die Beschreibung",
-                                                "bold": false
-                                            }
-                                        ]
-                                    }
-                                ],
-                                "relativePosition": {
-                                    "x": 0,
-                                    "y": 40
-                                },
-                                "columnGap": 10
-                            }
-                        ]
-                    }
-                ]
-            };
 
 
             // Keep Chart together
