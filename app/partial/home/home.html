@@ -8,9 +8,14 @@
         </md-tab>
         <md-tab label="Output">
             <md-content class="md-padding">
+
                 <h1 class="md-display-2">Output  <span class="md-caption">Calculation ( {{d.timings.duration}} milliseconds )</span></h1>
                 <div ng-jsoneditor ng-model="d.output" options="d.json_editor_options" style="width: 100%; height: 550px;"></div>
             </md-content>
         </md-tab>
     </md-tabs>
+    <div style="padding-left: 12px;">
+        <button type="button" class="btn btn-primary" ng-click="changeOptions()"><i class="fa fa-check-circle"></i> toggle options</button>
+    </div>
+    
 </div>

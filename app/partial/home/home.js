@@ -11,6 +11,8 @@ angular.module('optinomicCalculation').controller('HomeCtrl', function($scope, d
     $scope.selectedTabIndex = 1;
 
 
+    $scope.d.json_editor_options = { mode: 'tree' };
+
     $scope.d.timings = {};
     $scope.d.timings.start = performance.now();
     // --------------------------------------------------
@@ -22,5 +24,9 @@ angular.module('optinomicCalculation').controller('HomeCtrl', function($scope, d
 
     console.log('Optinoic-Calculation :: ', $scope.d);
 
+
+    $scope.changeOptions = function () {
+        $scope.d.json_editor_options.mode = $scope.d.json_editor_options.mode == 'tree' ? 'code' : 'tree';
+    };
 
 });
