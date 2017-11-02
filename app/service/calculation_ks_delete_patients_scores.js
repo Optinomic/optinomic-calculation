@@ -24,7 +24,6 @@ angular.module('optinomicCalculation').factory('calculation', function() {
             };
 
             // Build all Variants List
-            console.log(list);
             var result = list[0].map(function(item) {
                 return [item.id];
             });
@@ -65,8 +64,16 @@ angular.module('optinomicCalculation').factory('calculation', function() {
                 console.log('2.) dive', variantsID, dive);
 
                 // remove patients, scores
-                delete dive.patients; 
-                delete dive.scores; 
+                if ((dive !== null) && (dive !== undefined)) {
+                    if ("patients" in dive) {
+                        delete dive.patients;
+                    };
+                    if ("scores" in dive) {
+                        // remove patients, scores
+                        delete dive.scores;
+                    };
+                };
+
             });
 
 
